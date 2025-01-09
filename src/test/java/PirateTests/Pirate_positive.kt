@@ -10,46 +10,27 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-public class Pirate_positive {
+public class Pirate_positive: BaseTest {
 
-    private static SprutCloud spC;
-    private static GamesPage gamesPage;
-    private Pirate pirate;
-
-    @BeforeEach
-    void startGame() {
-        spC = new SprutCloud();
-        spC.enterUserName();
-        gamesPage = spC.loginInto();
-        pirate = gamesPage.getPirate_game(Env.ENV02);
-    }
-
-    @AfterEach
-    void tearDown() {
-        Selenide.closeWebDriver();
-    }
+    private val pirate: Pirate;
 
     @Test
-    @Tag("positive")
-    void shouldPayOnRed() {
+    void `Should pay on Red`() {
         pirate.payOnRed();
     }
 
     @Test
-    @Tag("positive")
-    void shouldPayOnMixed() {
+    void `Should pay on Mixed`() {
         pirate.payOnMixed();
     }
 
     @Test
-    @Tag("positive")
-    void shouldPayOnBlack() {
+    void `Should pay on Black`() {
         pirate.payOnBlack();
     }
 
     @Test
-    @Tag("positive")
-    void shouldPayOnAll() {
+    void `Should pay on All`() {
         pirate.payOnRed();
         pirate.payOnMixed();
         pirate.payOnBlack();

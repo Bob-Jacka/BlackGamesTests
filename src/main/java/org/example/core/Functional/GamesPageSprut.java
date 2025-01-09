@@ -37,7 +37,7 @@ public class GamesPage {
             gameList.get(COLOR_RACE_ENV3.getId()).find(By.linkText(COLOR_RACE.getName())).click();
             return new ColorRace();
         } else {
-            throw new RuntimeException();
+            throw new RuntimeException("error in getting color race game");
         }
     }
 
@@ -53,7 +53,7 @@ public class GamesPage {
             gameList.get(LUCKY_FISH_ENV3.getId()).find(By.linkText(LUCKY_FISH.getName())).click();
             return new LuckyFish();
         } else {
-            throw new RuntimeException();
+            throw new RuntimeException("error in getting lucky fish game");
         }
     }
 
@@ -69,7 +69,7 @@ public class GamesPage {
             gameList.get(MOOSCAPE_ENV3.getId()).find(By.linkText(MOOSCAPE.getName())).click();
             return new Mooscape();
         } else {
-            throw new RuntimeException();
+            throw new RuntimeException("error in getting mooscape game");
         }
     }
 
@@ -85,7 +85,7 @@ public class GamesPage {
             gameList.get(PIRATE_ENV3.getId()).find(By.linkText(PIRATE.getName())).click();
             return new Pirate();
         } else {
-            throw new RuntimeException();
+            throw new RuntimeException("error in getting pirate game");
         }
     }
 

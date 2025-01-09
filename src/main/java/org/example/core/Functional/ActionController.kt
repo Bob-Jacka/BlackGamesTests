@@ -5,9 +5,9 @@ import org.awaitility.Awaitility
 import org.openqa.selenium.Point
 import java.time.Duration
 
-object ActionController {
+public object ActionController {
 
-    /**
+    /*
      * Performs moving cursor of point position and click on it
      *
      * @param whereToClick represents point with x and y coordinates
@@ -19,7 +19,7 @@ object ActionController {
         Awaitility.await().atLeast(Duration.ofSeconds(1)).atMost(Duration.ofSeconds(2)).ignoreExceptions()
     }
 
-    /**
+    /*
      * Метод для ожидания событий
      *
      * @param seconds ожидание скольки секунд
@@ -33,8 +33,19 @@ object ActionController {
         }
     }
 
+    /*
+    * Метод дл ввода символов с клавиатуры
+     */
     @JvmStatic
-    fun enterByKeyboard(string: CharSequence) {
-        Selenide.webdriver().driver().actions().sendKeys(string.toString())
+    fun enterByKeyboard(enteredChars: CharSequence) {
+        Selenide.webdriver().driver().actions().sendKeys(enteredChars.toString())
+    }
+
+    /*
+    * Метод дл ввода результатов тестирования
+     */
+    @JvmStatic
+    fun enter_result() {
+        val entered:String = Scanner(System.`in`)
     }
 }

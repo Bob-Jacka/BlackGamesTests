@@ -40,6 +40,7 @@ class Mooscape {
         val plus_coef_btn: Point = Point(930, 795)
         val coef_input_field: Point = Point(885, 795)
 
+        //preselects
         val one: Point = Point(630, 875)
         val two: Point = Point(670, 875)
         val three: Point = Point(710, 875)
