@@ -1,12 +1,13 @@
 package ColorRaceTests;
 
-import com.codeborne.selenide.Selenide;
-import org.example.core.enums.Env;
-import org.example.core.pages.GamesPage;
-import org.example.core.pages.games.ColorRace;
+import com.codeborne.selenide.Browsers
+import org.example.core.Functional.GamesPageSprut
+import org.example.core.enums.Env
+import org.example.core.enums.Stages
+import org.example.core.pages.SC_games.ColorRace
 
-public class ColorRace_negative: BaseTest {
+class ColorRace_negative : BaseTest(Stages.STABLE, Browsers.CHROME) {
 
-    private val colorRace: ColorRace = gamesPage.getColorRace_game(Env.ENV02);
+    private val colorRace: ColorRace = (gameList as GamesPageSprut).getColorRace_game(Env.ENV03) as ColorRace
 
 }

@@ -1,11 +1,12 @@
-package org.example.core.pages
+package org.example.core.Functional
 
 import com.codeborne.selenide.Selenide
 import org.awaitility.Awaitility
 import org.openqa.selenium.Point
 import java.time.Duration
+import java.util.Scanner
 
-public object ActionController {
+object ActionController {
 
     /*
      * Performs moving cursor of point position and click on it
@@ -46,6 +47,6 @@ public object ActionController {
      */
     @JvmStatic
     fun enter_result() {
-        val entered:String = Scanner(System.`in`)
+        val entered: String = Scanner(System.`in`).toString()
     }
 }

@@ -1,4 +1,4 @@
-package org.example.core.pages
+package org.example.core.Functional
 
 import org.openqa.selenium.Point
 

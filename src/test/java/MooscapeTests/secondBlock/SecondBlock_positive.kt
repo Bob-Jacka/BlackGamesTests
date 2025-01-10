@@ -1,12 +1,12 @@
 package mooscapeTests.secondBlock
 
 import com.codeborne.selenide.Selenide
+import org.example.core.Functional.Operator.SprutCloud
+import org.example.core.Functional.getFor_secondBlock
 import org.example.core.enums.Env
 import org.example.core.pages.GamesPage
-import org.example.core.pages.SprutCloud
-import org.example.core.pages.games.Mooscape
-import org.example.core.pages.games.Mooscape.BetBlock
-import org.example.core.pages.getFor_secondBlock
+import org.example.core.pages.SC_games.Mooscape
+import org.example.core.pages.SC_games.Mooscape.BetBlock
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Tag

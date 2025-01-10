@@ -1,13 +1,13 @@
-package org.example.core.pages.games
+package org.example.core.pages.SC_games
 
-import org.example.core.pages.ActionController
-import org.example.core.pages.ActionController.clickOn
-import org.example.core.pages.ActionController.enterByKeyboard
-import org.example.core.pages.games.Mooscape.BetBlock
-import org.example.core.pages.getFor_secondBlock
+import org.example.core.Functional.ActionController
+import org.example.core.Functional.ActionController.clickOn
+import org.example.core.Functional.ActionController.enterByKeyboard
+import org.example.core.Functional.getFor_secondBlock
+import org.example.core.pages.SC_games.Mooscape.BetBlock
 import org.openqa.selenium.Point
 
-class Mooscape {
+class Mooscape : Game {
 
     private var isSound = false
 
@@ -20,12 +20,13 @@ class Mooscape {
     private val sound_btn = Point(1412, 185)
     private val how_to_play = Point(1518, 185)
     private val balance = Point(1679, 185)
+        //TODO добавить историю
 
     /**
      * first bet block of mooscape game
      * if you want second block, get first block elem and transform it with
      *
-     * @see org.example.core.pages.getFor_secondBlock
+     * @see getFor_secondBlock
      */
     class BetBlock {
 
@@ -50,7 +51,7 @@ class Mooscape {
             ActionController.clickOn(elem)
         }
 
-        fun changeBet(up: Boolean, howMany: Int) {
+        fun change_bet(up: Boolean, howMany: Int) {
             if (up) {
                 repeat(howMany) {
                     ActionController.clickOn(plus_bet_btn)
@@ -95,23 +96,34 @@ class Mooscape {
         }
     }
 
-    fun startGame() {
+    override fun startGame() {
         clickOn(play_btn)
     }
 
-    fun setSoundOn() {
+    override fun get_in_history() {
+        TODO("Not yet implemented")
+    }
+
+    override fun enter_blockchain() {
+        clickOn(block_chain_info)
+    }
+
+    override fun setSoundOn() {
         if (!isSound) {
             isSound = true
+            clickOn(sound_btn)
+        } else {
+            isSound = false
             clickOn(sound_btn)
         }
     }
 
-    fun open_cachier() {
-        clickOn(cachier_btn)
+    override fun change_bet(up: Boolean, howMany: Int) {
+        TODO("Not yet implemented")
     }
 
-    fun open_blockchainInfo() {
-        clickOn(block_chain_info)
+    fun open_cachier() {
+        clickOn(cachier_btn)
     }
 
     fun open_settings() {

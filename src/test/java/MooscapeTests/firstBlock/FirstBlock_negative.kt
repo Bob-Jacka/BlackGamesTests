@@ -1,20 +1,14 @@
-package mooscapeTests.firstBlock
+package MooscapeTests.firstBlock
 
-import com.codeborne.selenide.Selenide
 import org.example.core.enums.Env
-import org.example.core.pages.GamesPage
-import org.example.core.pages.SprutCloud
-import org.example.core.pages.games.Mooscape
-import org.example.core.pages.games.Mooscape.BetBlock
-import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Tag
+import org.example.core.pages.SC_games.Mooscape
+import org.example.core.pages.SC_games.Mooscape.BetBlock
 import org.junit.jupiter.api.Test
 
-class FirstBlock_negative: BaseTest {
+class FirstBlock_negative : BaseTest() {
 
-    private lateinit var mooscape: Mooscape = gamesPage.getMooscape_game(Env.ENV02)
-    private lateinit var fblock: BetBlock = mooscape.getFirstBetBlock()
+    private var mooscape: Mooscape = super.gamesPage.getMooscape_game(Env.ENV02)
+    private var fblock: BetBlock = mooscape.getFirstBetBlock()
 
     @Test
     fun `first block - enter coef by myself 256`() {

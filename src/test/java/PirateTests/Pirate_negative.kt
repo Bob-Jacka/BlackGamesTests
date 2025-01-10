@@ -1,15 +1,12 @@
-package PirateTests;
+package PirateTests
 
-import com.codeborne.selenide.Selenide;
-import org.example.core.enums.Env;
-import org.example.core.pages.GamesPage;
-import org.example.core.pages.SprutCloud;
-import org.example.core.pages.games.Pirate;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Tag;
+import com.codeborne.selenide.Browsers
+import org.example.core.Functional.GamesPageSprut
+import org.example.core.enums.Env
+import org.example.core.enums.Stages
+import org.example.core.pages.SC_games.Pirate
 
-public class Pirate_negative: BaseTest {
+class Pirate_negative : BaseTest(Stages.STABLE, Browsers.CHROME) {
 
-    private val pirate: Pirate;
+    private val pirate: Pirate = (gameList as GamesPageSprut).getPirate_game(Env.ENV03) as Pirate
 }

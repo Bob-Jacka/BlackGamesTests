@@ -1,20 +1,14 @@
 package mooscapeTests.firstBlock
 
-import com.codeborne.selenide.Selenide
 import org.example.core.enums.Env
-import org.example.core.pages.GamesPage
-import org.example.core.pages.SprutCloud
-import org.example.core.pages.games.Mooscape
-import org.example.core.pages.games.Mooscape.BetBlock
-import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Tag
+import org.example.core.pages.SC_games.Mooscape
+import org.example.core.pages.SC_games.Mooscape.BetBlock
 import org.junit.jupiter.api.Test
 
-class FirstBlock_positive: BaseTest {
+class FirstBlock_positive : BaseTest() {
 
-    private lateinit var mooscape: Mooscape = gamesPage.getMooscape_game(Env.ENV02)
-    private lateinit var fblock: BetBlock = mooscape.firstBetBlock
+    private var mooscape: Mooscape = super.gamesPage.getMooscape_game(Env.ENV02)
+    private var fblock: BetBlock = mooscape.firstBetBlock
 
     @Test
     fun `first block - autobet`() {

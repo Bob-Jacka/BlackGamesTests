@@ -1,42 +1,19 @@
-package mooscapeTests
+package MooscapeTests
 
-import com.codeborne.selenide.Selenide
+import com.codeborne.selenide.Browsers
+import org.example.core.Functional.GamesPageSprut
 import org.example.core.enums.Env
-import org.example.core.pages.GamesPage
-import org.example.core.pages.SprutCloud
-import org.example.core.pages.games.Mooscape
-import org.example.core.pages.games.Mooscape.BetBlock
-import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.BeforeEach
+import org.example.core.enums.Stages
+import org.example.core.pages.SC_games.Mooscape
 import org.junit.jupiter.api.Test
 
-class MooscapeTests {
+class MooscapeTests : BaseTest(Stages.STABLE, Browsers.CHROME) {
 
-    private lateinit var spC: SprutCloud
-    private lateinit var gamesPage: GamesPage
-    private lateinit var mooscape: Mooscape
-
-    @BeforeEach
-    fun startGame() {
-        spC = SprutCloud()
-        spC.enterUserName()
-        gamesPage = spC.loginInto()
-        mooscape = gamesPage.getMooscape_game(Env.ENV02)
-    }
-
-    @AfterEach
-    fun tearDown() {
-        Selenide.closeWebDriver()
-    }
+    private val mooscape: Mooscape = (gameList as GamesPageSprut).getMooscape_game(Env.ENV03) as Mooscape
 
     @Test
     fun `start the Game`() {
         mooscape.startGame()
-    }
-
-    @Test
-    fun `open cachier page`() {
-        mooscape.open_cachier()
     }
 
     @Test

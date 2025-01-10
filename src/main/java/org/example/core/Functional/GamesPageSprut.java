@@ -1,21 +1,19 @@
-package org.example.core.pages;
+package org.example.core.Functional;
 
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import org.example.core.enums.Env;
-import org.example.core.pages.games.ColorRace;
-import org.example.core.pages.games.LuckyFish;
-import org.example.core.pages.games.Mooscape;
-import org.example.core.pages.games.Pirate;
+import org.example.core.pages.SC_games.*;
+import org.jetbrains.annotations.NotNull;
 import org.openqa.selenium.By;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
+import static org.example.core.Functional.ActionController.waitFor;
 import static org.example.core.enums.GameId.*;
 import static org.example.core.enums.GameName.*;
-import static org.example.core.pages.ActionController.waitFor;
 
-public class GamesPage {
+public class GamesPageSprut implements GameList {
 
     private final ElementsCollection gameProvider = $$(By.xpath("//select[@name='provider']/option"));
     private final ElementsCollection gameCurrency = $$(By.xpath("//select[@name='currency']/option"));
@@ -26,7 +24,8 @@ public class GamesPage {
     private final SelenideElement provider = $(By.xpath("//select[@name='provider']"));
     private final SelenideElement currency = $(By.xpath("//select[@name='currency']"));
 
-    public ColorRace getColorRace_game(Env env) {
+    @NotNull
+    public Game getColorRace_game(@NotNull Env env) {
         if (env == Env.ENV02) {
             changeProvider();
             waitFor(1);
@@ -41,7 +40,8 @@ public class GamesPage {
         }
     }
 
-    public LuckyFish getLuckyFish_game(Env env) {
+    @NotNull
+    public Game getLuckyFish_game(@NotNull Env env) {
         if (env == Env.ENV02) {
             changeProvider();
             waitFor(1);
@@ -57,7 +57,8 @@ public class GamesPage {
         }
     }
 
-    public Mooscape getMooscape_game(Env env) {
+    @NotNull
+    public Game getMooscape_game(@NotNull Env env) {
         if (env == Env.ENV02) {
             changeProvider();
             waitFor(2);
@@ -73,7 +74,8 @@ public class GamesPage {
         }
     }
 
-    public Pirate getPirate_game(Env env) {
+    @NotNull
+    public Game getPirate_game(@NotNull Env env) {
         if (env == Env.ENV02) {
             changeProvider();
             waitFor(1);
@@ -89,6 +91,10 @@ public class GamesPage {
         }
     }
 
+    /*
+        Valid statements for method
+        @param platformName - desktop or mobile
+     */
     public void changePlatform(String platformName) {
         platforms.click();
         switch (platformName) {
