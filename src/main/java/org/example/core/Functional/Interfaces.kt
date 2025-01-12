@@ -1,9 +1,12 @@
-package org.example.core.pages.SC_games
+package org.example.core.Functional
 
 import org.example.core.Functional.GamesPageSprut
 import org.example.core.enums.Env
 
-interface Game {
+/*
+Interface for current 'sc;' game implementation
+ */
+interface IGame {
 
     fun startGame()
     fun get_in_history()
@@ -12,18 +15,28 @@ interface Game {
     fun change_bet(up: Boolean, howMany: Int)
 }
 
+interface ISlot {
+
+    fun startGame()
+    fun bet()
+    fun getInRules()
+    fun change_bet(howMany: Int)
+    fun change_speed(howMany: Int)
+}
+
 /*
 Objects that implement this interface is "gate" to game portal
  */
-interface StageOperator {
+interface IStageOperator {
 
     fun loginInto(): GamesPageSprut
+    fun enterUserCred()
 }
 
 /*
 List with current games and action to receive game object
  */
-interface GameList {
+interface IGameList {
 
     fun getColorRace_game(env: Env): Game
     fun getLuckyFish_game(env: Env): Game

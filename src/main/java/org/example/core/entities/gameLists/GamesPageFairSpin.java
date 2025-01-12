@@ -1,4 +1,4 @@
-package org.example.core.Functional;
+package org.example.core.entities.GameLists;
 
 import com.codeborne.selenide.ElementsCollection;
 import org.example.core.enums.Env;
@@ -11,7 +11,8 @@ import static org.example.core.Functional.ActionController.waitFor;
 import static org.example.core.enums.GameId.COLOR_RACE_ENV2;
 import static org.example.core.enums.GameName.COLOR_RACE;
 
-public class GamesPageFairSpin implements GameList {
+@Component
+public class GamesPageFairSpin implements IGameList {
 
     //TODO переделать класс
     private final ElementsCollection gameList = $$(By.xpath("//div[@id='gameList']/div"));

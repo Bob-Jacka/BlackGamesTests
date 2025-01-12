@@ -3,7 +3,7 @@ package org.example.core.pages.SC_games
 import org.example.core.Functional.ActionController.clickOn
 import org.openqa.selenium.Point
 
-class Pirate : Game {
+class Pirate : IGame {
 
     private var isSound = false
 

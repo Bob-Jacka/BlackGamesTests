@@ -7,7 +7,7 @@ import org.example.core.Functional.getFor_secondBlock
 import org.example.core.pages.SC_games.Mooscape.BetBlock
 import org.openqa.selenium.Point
 
-class Mooscape : Game {
+class Mooscape : IGame {
 
     private var isSound = false
 

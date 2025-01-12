@@ -5,7 +5,7 @@ import org.example.core.Functional.GamesPageSprut
 import org.example.core.enums.Env
 import org.example.core.enums.Stages
 import org.example.core.pages.SC_games.Pirate
-import org.example.core.pages.SC_games.Test
+import org.example.core.pages.SC_games.TestAnnotation
 
 class Pirate_positive : BaseTest(Stages.STABLE, Browsers.CHROME) {
 

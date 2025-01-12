@@ -12,18 +12,26 @@ import org.junit.jupiter.api.TestInfo;
 
 import static org.example.core.Functional.ActionController.waitFor;
 
-public class BaseTest {
+public class EntityFactory {
 
-    //TODO убрать зависимость от PageDistribution
+    private static EntityFactory factory;
+
     private static Stages stage;
-    private static PageDistribution pg;
     private static StageOperator operator;
     private static GameList gameList;
 
-    public BaseTest(final Stages stage, final String browser) {
-        pg = new PageDistribution(stage, browser);
-        BaseTest.stage = pg.getStage();
-        switch (BaseTest.stage) {
+    private EntityFactory() {}
+
+    public static EntityFactory getInstance() {
+        if (factory == null) {
+            factory = new EntityFactory();
+        }
+        return factory;
+    }
+
+    public getEntity(final Stages stage, final String browser) {
+        EntityFactory.stage = PageDistribution.getInstance(stage, browser).getStage();
+        switch (EntityFactory.stage) {
             case PROD -> {
                 operator = new FairSpin();
                 gameList = ((FairSpin) operator).loginInto();
@@ -51,16 +59,12 @@ public class BaseTest {
     public void tearDown() {
         Selenide.closeWebDriver();
         stage = null;
-        pg = null;
+        factory = null;
         operator = null;
     }
 
     public Stages getStage() {
         return stage;
-    }
-
-    public PageDistribution getPageDist() {
-        return pg;
     }
 
     public StageOperator getOperator() {

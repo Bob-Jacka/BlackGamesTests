@@ -1,5 +1,5 @@
-PageDistribution.getStage() -> BaseTest -> {
-	FairSpin -> GamesPageFairSpin -> Игры (mooscape, lucky f, pirate, color)
+PageDistributionService.getStage() -> EntityFactory -> {
+	FairSpin -> GamesPageFairSpin -> Игры (Mooscape, LuckyFish, Pirate, ColorRace)
 	или
 	SprutCloud -> GamesPageSprut -> Игры (Mooscape, LuckyFish, Pirate, ColorRace)
 	или
@@ -9,7 +9,7 @@ PageDistribution.getStage() -> BaseTest -> {
 "->" - означает последовательность вызовов объектов
 
 PageDistribution - Инициализация драйвера браузере, установка параметров браузера, получение Stage
-BaseTest - базовый класс для тестов, инициализация действий перед и после теста, управление всеми нижележащими сущностями
+EntityFactory - класс для тестов, инициализация действий перед и после теста, управление всеми нижележащими сущностями
 Fair spin - вход в аккаунт на сайте оператора (Page object)
 GamesPageSprut - Page object выбора игры, получение доступа к "созданию" игры
 Игры - непосредственно игра с уникальными действиями

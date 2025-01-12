@@ -5,9 +5,39 @@ import org.example.core.Functional.GamesPageSprut
 import org.example.core.enums.Env
 import org.example.core.enums.Stages
 import org.example.core.pages.SC_games.ColorRace
+import org.example.core.pages.SC_games.TestAnnotation
 
 class ColorRace_positive : BaseTest(Stages.STABLE, Browsers.CHROME) {
 
     private val colorRace: ColorRace = (gameList as GamesPageSprut).getColorRace_game(Env.ENV03) as ColorRace
 
+    @Test
+    fun ``() {
+
+    }
+    
+    @Test
+    fun ``() {
+        
+    }
+
+    @Test
+    fun ``() {
+        
+    }
+
+    @Test
+    fun ``() {
+        
+    }
+
+    @Test
+    fun ``() {
+        
+    }
+
+    @Test
+    fun ``() {
+        
+    }
 }

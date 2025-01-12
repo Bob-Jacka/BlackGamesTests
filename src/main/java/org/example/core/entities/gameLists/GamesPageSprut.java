@@ -1,4 +1,4 @@
-package org.example.core.Functional;
+package org.example.core.entities.GameLists;
 
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
@@ -13,7 +13,8 @@ import static org.example.core.Functional.ActionController.waitFor;
 import static org.example.core.enums.GameId.*;
 import static org.example.core.enums.GameName.*;
 
-public class GamesPageSprut implements GameList {
+@Component
+public class GamesPageSprut implements IGameList {
 
     private final ElementsCollection gameProvider = $$(By.xpath("//select[@name='provider']/option"));
     private final ElementsCollection gameCurrency = $$(By.xpath("//select[@name='currency']/option"));
