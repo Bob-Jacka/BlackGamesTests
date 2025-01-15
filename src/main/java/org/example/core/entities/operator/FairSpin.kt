@@ -1,35 +1,38 @@
 package org.example.core.entities.operator
 
 import com.codeborne.selenide.Selenide
-import org.example.core.Functional.ActionController.waitFor
-import org.example.core.Functional.GamesPageFairSpin
-import org.example.core.pages.SC_games.IStageOperator
+import com.codeborne.selenide.SelenideElement
+import org.example.core.annotation.BetOperator
+import org.example.core.entities.gameLists.GamesPageFairSpin
+import org.example.core.functional.ActionController.wait_For
+import org.example.core.functional.IGameList
+import org.example.core.functional.IStageOperator
 import org.openqa.selenium.By
 
-@Component
+@BetOperator
 class FairSpin : IStageOperator { //TODO переделать локаторы
 
-    private val userName = Selenide.`$`(By.xpath(""))
-    private val password = Selenide.`$`(By.xpath(""))
+    override val user_name_field: SelenideElement = Selenide.`$`(By.xpath(""))
+    override val user_password_field: SelenideElement = Selenide.`$`(By.xpath(""))
+    override val login_btn: SelenideElement = Selenide.`$`(By.xpath("")) //TODO()
     private val loginBtn = Selenide.`$`(By.xpath(""))
 
-
-    fun loginInto(): GamesPageFairSpin {
-        enterUserCred()
+    override fun login_into_account(): IGameList {
+        enter_user_cred()
         loginBtn.click()
-        waitFor(1)
+        wait_For(1)
         return GamesPageFairSpin()
     }
 
     /**
      * enters username on sprut page
      */
-    fun enterUserCred() {
-        userName.sendKeys(player_login)
-        password.sendKeys(player_password)
+    override fun enter_user_cred() {
+        user_name_field.sendKeys(player_login)
+        user_password_field.sendKeys(player_password)
     }
 
-    companion object {
+    companion object Credits {
 
         private const val player_login = "q"
         private const val player_password = "q"

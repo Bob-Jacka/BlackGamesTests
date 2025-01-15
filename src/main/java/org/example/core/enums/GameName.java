@@ -1,5 +1,8 @@
 package org.example.core.enums;
 
+import lombok.Getter;
+
+@Getter
 public enum GameName {
 
     MOOSCAPE("Mooscape"),
@@ -7,13 +10,9 @@ public enum GameName {
     COLOR_RACE("Color Race"),
     PIRATE("Pirate flipping coins");
 
-    private String name;
+    private final String name;
 
     GameName(String name) {
         this.name = name;
-    }
-
-    public String getName() {
-        return name;
     }
 }

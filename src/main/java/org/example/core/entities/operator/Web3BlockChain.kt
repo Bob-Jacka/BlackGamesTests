@@ -1,18 +1,26 @@
 package org.example.core.entities.operator
 
-import org.example.core.pages.SC_games.IStageOperator
+import com.codeborne.selenide.SelenideElement
+import org.example.core.annotation.BetOperator
+import org.example.core.entities.gameLists.GamesPageSprut
+import org.example.core.functional.IStageOperator
 
-/*
-    Site for slots
+/**
+Site for slots
  */
-@Component
+@BetOperator
 class Web3BlockChain : IStageOperator {
 
-    override fun loginInto(): GamesPageSprut {
-        //
+    override val user_name_field: SelenideElement? = null
+    override val user_password_field: SelenideElement? = null
+
+    override val login_btn: SelenideElement = TODO()
+
+    override fun login_into_account(): GamesPageSprut {
+        return TODO("Provide the return value")
     }
 
-    override fun enterUserCred() {
-        //
+    override fun enter_user_cred() {
+        return TODO("Provide the return value")
     }
 }

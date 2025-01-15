@@ -1,5 +1,8 @@
 package org.example.core.enums;
 
+import lombok.Getter;
+
+@Getter
 public enum GameId {
 
     COLOR_RACE_ENV2(3),
@@ -15,9 +18,5 @@ public enum GameId {
 
     GameId(int i) {
         this.id = i;
-    }
-
-    public int getId() {
-        return id;
     }
 }

@@ -1,5 +1,8 @@
 package org.example.core.enums;
 
+import lombok.Getter;
+
+@Getter
 public enum Env {
 
     ENV02("env02"),
@@ -9,9 +12,5 @@ public enum Env {
 
     Env(String env) {
         this.val = env;
-    }
-
-    public String getValue() {
-        return val;
     }
 }

@@ -1,15 +1,21 @@
-PageDistributionService.getStage() -> EntityFactory -> {
-	FairSpin -> GamesPageFairSpin -> Игры (Mooscape, LuckyFish, Pirate, ColorRace)
+Config -> {
+
+PageDistributionService.getStage() ->
+	{
+	FairSpin -> GamesPageFairSpin -> Игры (Mooscape, LuckyFish, Pirate, ColorRace) -> Тесты (Positive | Negative)
 	или
-	SprutCloud -> GamesPageSprut -> Игры (Mooscape, LuckyFish, Pirate, ColorRace)
+	SprutCloud -> GamesPageSprut -> Игры (Mooscape, LuckyFish, Pirate, ColorRace) -> Тесты (Positive | Negative)
 	или
-	Web3BlockChain -> ... (slots)
+	Web3BlockChain -> GamesPageSlots (slots) -> Слоты -> Тесты ()
+    }
 }
 
 "->" - означает последовательность вызовов объектов
 
+Config - конфигурационный файл фреймворка "Spring", в котором описываются компоненты для создания,
 PageDistribution - Инициализация драйвера браузере, установка параметров браузера, получение Stage
-EntityFactory - класс для тестов, инициализация действий перед и после теста, управление всеми нижележащими сущностями
-Fair spin - вход в аккаунт на сайте оператора (Page object)
-GamesPageSprut - Page object выбора игры, получение доступа к "созданию" игры
-Игры - непосредственно игра с уникальными действиями
+
+Fair spin - вход в аккаунт на сайте оператора (Page object);
+GamesPageSprut - Page object выбора игры, получение доступа к "созданию" игры;
+Игры - непосредственно игра с уникальными действиями;
+Тесты - автоматизированные тесты в директории "test";

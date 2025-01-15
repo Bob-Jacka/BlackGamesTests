@@ -2,8 +2,8 @@ plugins {
     id("java")
     kotlin("jvm")
     id("org.springframework.boot") version "3.4.1"
-	id("io.spring.dependency-management") version "1.1.7"
-	id("org.graalvm.buildtools.native") version "0.10.4"
+    id("io.spring.dependency-management") version "1.1.7"
+    id("org.graalvm.buildtools.native") version "0.10.4"
 }
 
 group = "org.example"
@@ -13,25 +13,17 @@ repositories {
     mavenCentral()
 }
 
-configurations {
-	compileOnly {
-		extendsFrom(configurations.annotationProcessor.get())
-	}
-}
-
 dependencies {
     implementation(platform("io.qameta.allure:allure-junit5:2.25.0"))
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:2.1.0")
     implementation("io.qameta.allure:allure-selenide:2.20.1")
     implementation("com.codeborne:selenide:7.4.0")
-    implementation("org.awaitility:awaitility:4.2.0")
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:2.0.0")
-
-    testImplementation(platform("org.junit:junit-bom:5.10.0"))
-    testImplementation("org.junit.jupiter:junit-jupiter")
-
-    testImplementation("org.springframework.boot:spring-boot-starter-test")
-	testImplementation("org.springframework.boot:spring-boot-testcontainers")
-    developmentOnly("org.springframework.boot:spring-boot-devtools")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.11.4")
+    testImplementation("org.junit.platform:junit-platform-suite:1.11.4")
+    implementation("org.apache.maven.plugins:maven-javadoc-plugin:3.11.2")
+    implementation("org.springframework.boot:spring-boot-starter-test")
+    implementation("org.springframework.boot:spring-boot-testcontainers")
+    implementation("org.springframework.boot:spring-boot-devtools")
 
     compileOnly("org.projectlombok:lombok")
     annotationProcessor("org.projectlombok:lombok")
@@ -47,7 +39,7 @@ kotlin {
 }
 
 java {
-	toolchain {
-		languageVersion = JavaLanguageVersion.of(17)
-	}
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
 }

@@ -1,5 +1,8 @@
 package org.example.core.enums;
 
+import lombok.Getter;
+
+@Getter
 public enum Stages {
 
     PROD("https://fairspin.io/ru/casino/all/provider/Web3Originals"),
@@ -10,13 +13,9 @@ public enum Stages {
 
     SLOT_PROD("https://web3blockchaingame.com/");
 
-    private String stage_name;
+    private final String stage_name;
 
     Stages(String name) {
         this.stage_name = name;
-    }
-
-    public String getName() {
-        return this.stage_name;
     }
 }
