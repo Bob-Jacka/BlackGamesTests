@@ -15,12 +15,14 @@ import org.springframework.boot.test.context.TestConfiguration
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Profile
+import org.springframework.context.annotation.
 
 /**
  * Config file for main architecture
  */
 @Profile("Stable")
 @Configuration
+@ComponentScan(selectPackages = {"org.example.core.entities"})
 class Config {
 
     @Autowired
@@ -36,44 +38,63 @@ class Config {
     private lateinit var game: IGame
 
     @Bean
-    fun getPageDist(): PageDistributionService? {
+    fun pageDistribution(): PageDistributionService? {
         return PageDistributionService.getInstance(Stages.STABLE)
     }
 
     @Bean
-    fun getOperator(): IStageOperator {
+    fun gameList(): IGameList {
+        gameList = operator.login_into_account()
+        return gameList
+    }
+
+    @Bean
+    fun operator(): IStageOperator {
         when (pg.getStage()) {
             PROD -> {
                 operator = FairSpin()
-                gameList = operator.login_into_account()
             }
 
             SLOT_PROD -> {
                 operator = Web3BlockChain()
-                gameList = operator.login_into_account()
             }
 
             Stages.DEV -> {
                 operator = SprutCloud()
-                gameList = operator.login_into_account()
             }
 
             Stages.STABLE -> {
                 operator = SprutCloud()
-                gameList = operator.login_into_account()
             }
 
             Stages.PREPROD -> {
                 operator = SprutCloud()
-                gameList = operator.login_into_account()
             }
         }
         return operator
     }
 
     @Bean
-    fun getGame(): IGame {
+    fun game(): IGame {
         return game
+    }
+
+    fun getGame(): IGame {
+        if (this.game != null) {
+            return game
+        }
+    }
+
+    fun getOperator() {
+        if (this.operator != null) {
+            return operator
+        }
+    }
+
+    fun getGameList() {
+        if (this.gameList != null) {
+            return gameList
+        }
     }
 }
 
