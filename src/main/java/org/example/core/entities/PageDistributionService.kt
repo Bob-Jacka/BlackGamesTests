@@ -4,18 +4,18 @@ import com.codeborne.selenide.Browsers
 import com.codeborne.selenide.Configuration
 import com.codeborne.selenide.Selenide
 import com.codeborne.selenide.WebDriverRunner
+import org.example.core.annotation.DistributionPage
 import org.example.core.enums.Stages
 import org.example.core.functional.string
-import org.springframework.stereotype.Service
 
 /**
  * Сервис для открытия браузера по переданному значению 'stage'
  */
-@Service
-class PageDistributionService {
+@DistributionPage
+open class PageDistributionService {
 
-    private var stage: Stages
-    private var browser: string
+    private lateinit var stage: Stages
+    private lateinit var browser: string
 
     companion object singletonPage {
 
@@ -29,7 +29,9 @@ class PageDistributionService {
         }
     }
 
-    private constructor(stage: Stages, browser: string = Browsers.CHROME) {
+    constructor()
+
+    constructor(stage: Stages, browser: string = Browsers.CHROME) {
         this.stage = stage
         this.browser = browser
         Configuration.browser = browser

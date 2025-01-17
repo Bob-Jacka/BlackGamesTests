@@ -2,6 +2,7 @@ package org.example.core.entities.gameLists;
 
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
+import org.example.core.annotation.BetGamesPage;
 import org.example.core.enums.Env;
 import org.example.core.enums.GameName;
 import org.example.core.functional.IGame;
@@ -13,7 +14,7 @@ import org.example.core.pages.sc_games.Mooscape;
 import org.example.core.pages.sc_games.Pirate;
 import org.jetbrains.annotations.NotNull;
 import org.openqa.selenium.By;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Primary;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
@@ -21,7 +22,12 @@ import static org.example.core.enums.GameId.*;
 import static org.example.core.enums.GameName.*;
 import static org.example.core.functional.ActionController.wait_For;
 
-@Component
+/**
+ * Page with games
+ * Annotated with @Primary to let spring boot know which bean is main in category
+ */
+@BetGamesPage
+@Primary
 public class GamesPageSprut implements IGameList {
 
     private final ElementsCollection gameProvider = $$(By.xpath("//select[@name='provider']/option"));
@@ -32,6 +38,10 @@ public class GamesPageSprut implements IGameList {
     private final SelenideElement platforms = $(By.xpath("//select[@name='platform' and @id='selectPlatform']"));
     private final SelenideElement provider = $(By.xpath("//select[@name='provider']"));
     private final SelenideElement currency = $(By.xpath("//select[@name='currency']"));
+
+    public GamesPageSprut() {
+
+    }
 
     @NotNull
     public IGameSC get_colorRace_game(@NotNull Env env) {

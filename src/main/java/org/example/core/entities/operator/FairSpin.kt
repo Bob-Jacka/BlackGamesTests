@@ -17,6 +17,8 @@ class FairSpin : IStageOperator { //TODO переделать локаторы
     override val login_btn: SelenideElement = Selenide.`$`(By.xpath("")) //TODO()
     private val loginBtn = Selenide.`$`(By.xpath(""))
 
+    constructor()
+
     override fun login_into_account(): IGameList {
         enter_user_cred()
         loginBtn.click()

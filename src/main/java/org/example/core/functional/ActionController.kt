@@ -1,13 +1,8 @@
 package org.example.core.functional
 
 import com.codeborne.selenide.Selenide
-import lombok.Builder
-import org.awaitility.Awaitility
 import org.example.core.settings.*
-import java.time.Duration
 import java.util.*
-import javax.swing.JFrame
-import kotlin.properties.Delegates
 
 object ActionController {
 
@@ -20,7 +15,7 @@ object ActionController {
     fun click_On(whereToClick: ElemPos) {
         wait_For(2)
         Selenide.webdriver().driver().actions().moveToLocation(whereToClick.getX(), whereToClick.getY()).click()
-        Awaitility.await().atLeast(Duration.ofSeconds(1)).atMost(Duration.ofSeconds(2)).ignoreExceptions()
+        wait_For(2)
     }
 
     /**
@@ -31,7 +26,7 @@ object ActionController {
     @JvmStatic
     fun wait_For(seconds: long = 1) {
         try {
-            Thread.sleep(seconds)
+            Thread.sleep(seconds * 1000)
         } catch (e: InterruptedException) {
             print(e.stackTrace)
         }
@@ -57,48 +52,19 @@ object ActionController {
         val entered: string = Scanner(System.`in`).toString()
 
         if (entered in passValues) {
-            println("test passed")
+            println("Test passed")
             return true
         }
 
         if (entered in failedValues) {
-            println("test failure")
+            println("Test failure")
             return false
         }
 
-        if (entered in skippedValues) {
-            println("skipped")
+        if (entered in skipValues) {
+            println("Test skipped")
             return true
         }
-
         return false
-    }
-}
-
-/**
- * Функционал для выделения искомого элемента рамкой
- */
-@Builder(setterPrefix = "setBound_")
-class Frame() : JFrame() {
-
-    private var height: int = 200
-    private var width: int = 200
-    private lateinit var frameName: string
-    private var closeMode: int by Delegates.notNull<int>()
-
-    fun Frame_construct(width: int, height: int, frameName: string, closeMode: int) {
-        this.closeMode = closeMode
-        this.width = width
-        this.height = height
-        this.frameName = frameName
-        initFrame()
-    }
-
-    private fun initFrame() {
-        setTitle(frameName)
-        setSize(width, height)
-        setDefaultCloseOperation(closeMode)
-        layout = null
-        isVisible = true
     }
 }

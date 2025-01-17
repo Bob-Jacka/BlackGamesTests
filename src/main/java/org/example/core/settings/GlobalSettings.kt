@@ -2,10 +2,13 @@ package org.example.core.settings
 
 import org.example.core.functional.string
 
+//Setting
 val passValues = listOf<string>("pass", "Pass", "1")
-val failedValues = listOf<string>()
-val skippedValues = listOf<string>()
+val failedValues = listOf<string>("fail", "Fail", "0")
+val skipValues = listOf<string>("skip", "Skipped", "skipped")
 
-const val everyTest_msg: string =
-    "Enter |pass, Pass or 1| for success test, |fail, Fail or 0| for failure test or skip to skip"
+var everyTest_msg: string =
+    "Enter " + passValues.joinToString() + "for success test, " +
+            failedValues.joinToString() + " for failure test or " +
+            skipValues.joinToString() + " to skip"
 const val cursor: string = ">> "

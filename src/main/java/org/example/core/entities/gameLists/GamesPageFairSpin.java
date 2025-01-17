@@ -1,6 +1,7 @@
 package org.example.core.entities.gameLists;
 
 import com.codeborne.selenide.ElementsCollection;
+import org.example.core.annotation.BetGamesPage;
 import org.example.core.enums.GameName;
 import org.example.core.functional.IGame;
 import org.example.core.functional.IGameList;
@@ -11,18 +12,21 @@ import org.example.core.pages.sc_games.Mooscape;
 import org.example.core.pages.sc_games.Pirate;
 import org.jetbrains.annotations.NotNull;
 import org.openqa.selenium.By;
-import org.springframework.stereotype.Component;
 
 import static com.codeborne.selenide.Selenide.$$;
 import static org.example.core.enums.GameId.COLOR_RACE_ENV2;
 import static org.example.core.enums.GameName.COLOR_RACE;
 import static org.example.core.functional.ActionController.wait_For;
 
-@Component
+@BetGamesPage
 public class GamesPageFairSpin implements IGameList {
 
     //TODO переделать класс
     private final ElementsCollection gameList = $$(By.xpath("//div[@id='gameList']/div"));
+
+    public GamesPageFairSpin() {
+
+    }
 
     @NotNull
     private IGameSC get_colorRace_game() {

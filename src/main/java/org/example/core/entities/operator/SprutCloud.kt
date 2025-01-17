@@ -8,13 +8,20 @@ import org.example.core.functional.ActionController.wait_For
 import org.example.core.functional.IGameList
 import org.example.core.functional.IStageOperator
 import org.openqa.selenium.By
+import org.springframework.context.annotation.Primary
 
+/**
+ * Страница входа в оператор 'Sprut cloud'
+ */
 @BetOperator
+@Primary
 class SprutCloud : IStageOperator {
 
     override val user_name_field: SelenideElement = Selenide.`$`(By.xpath("//input[@type='text']"))
     override val user_password_field: SelenideElement? = null
     override val login_btn = Selenide.`$`(By.xpath("//input[@type='submit']"))
+
+    constructor()
 
     override fun login_into_account(): IGameList {
         login_btn.click()

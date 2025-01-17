@@ -7,26 +7,26 @@ import org.example.core.entities.operator.Web3BlockChain
 import org.example.core.enums.Stages
 import org.example.core.enums.Stages.PROD
 import org.example.core.enums.Stages.SLOT_PROD
+import org.example.core.functional.ActionController.wait_For
 import org.example.core.functional.IGame
 import org.example.core.functional.IGameList
 import org.example.core.functional.IStageOperator
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.SpringBootConfiguration
 import org.springframework.boot.test.context.TestConfiguration
 import org.springframework.context.annotation.Bean
-import org.springframework.context.annotation.Configuration
-import org.springframework.context.annotation.Profile
-import org.springframework.context.annotation.
+import org.springframework.context.annotation.ComponentScan
 
 /**
  * Config file for main architecture
  */
-@Profile("Stable")
-@Configuration
-@ComponentScan(selectPackages = {"org.example.core.entities"})
-class Config {
+//@Profile("Stable")
+@SpringBootConfiguration
+@ComponentScan(basePackages = ["org.example.core.entities"])
+open class Config {
 
     @Autowired
-    private lateinit var pg: PageDistributionService
+    private lateinit var pageDistribution: PageDistributionService
 
     @Autowired
     private lateinit var operator: IStageOperator
@@ -38,36 +38,41 @@ class Config {
     private lateinit var game: IGame
 
     @Bean
-    fun pageDistribution(): PageDistributionService? {
+    open fun pageDistribution(): PageDistributionService? {
         return PageDistributionService.getInstance(Stages.STABLE)
     }
 
     @Bean
-    fun gameList(): IGameList {
+    open fun gameList(): IGameList {
         gameList = operator.login_into_account()
         return gameList
     }
 
     @Bean
-    fun operator(): IStageOperator {
-        when (pg.getStage()) {
+    open fun operator(): IStageOperator {
+        when (pageDistribution.getStage()) {
             PROD -> {
+                wait_For(2)
                 operator = FairSpin()
             }
 
             SLOT_PROD -> {
+                wait_For(2)
                 operator = Web3BlockChain()
             }
 
             Stages.DEV -> {
+                wait_For(2)
                 operator = SprutCloud()
             }
 
             Stages.STABLE -> {
+                wait_For(2)
                 operator = SprutCloud()
             }
 
             Stages.PREPROD -> {
+                wait_For(2)
                 operator = SprutCloud()
             }
         }
@@ -75,26 +80,29 @@ class Config {
     }
 
     @Bean
-    fun game(): IGame {
+    open fun game(): IGame {
         return game
     }
 
-    fun getGame(): IGame {
-        if (this.game != null) {
+    fun getGame(): IGame? {
+        if (game != null) {
             return game
         }
+        return null
     }
 
-    fun getOperator() {
-        if (this.operator != null) {
+    fun getOperator(): IStageOperator? {
+        if (operator != null) {
             return operator
         }
+        return null
     }
 
-    fun getGameList() {
-        if (this.gameList != null) {
+    fun getGameList(): IGameList? {
+        if (gameList != null) {
             return gameList
         }
+        return null
     }
 }
 

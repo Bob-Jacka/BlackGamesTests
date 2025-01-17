@@ -16,6 +16,8 @@ class Web3BlockChain : IStageOperator {
 
     override val login_btn: SelenideElement = TODO()
 
+    constructor()
+
     override fun login_into_account(): GamesPageSprut {
         return TODO("Provide the return value")
     }
