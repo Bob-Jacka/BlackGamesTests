@@ -14,32 +14,42 @@ repositories {
 }
 
 dependencies {
+
+    //Main logic dependencies
     implementation(platform("io.qameta.allure:allure-junit5:2.25.0"))
     implementation("org.jetbrains.kotlin:kotlin-stdlib:2.0.20")
     implementation("io.qameta.allure:allure-selenide:2.20.1")
     implementation("com.codeborne:selenide:7.4.0")
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.11.4")
-    testImplementation("org.junit.platform:junit-platform-suite:1.11.4")
     implementation("org.jetbrains.dokka:dokka-gradle-plugin:2.0.0")
+
+    //Spring dependencies
+    implementation("org.springframework.boot:spring-boot-starter-aop")
     implementation("org.springframework.boot:spring-boot-starter-test")
     implementation("org.springframework.boot:spring-boot-testcontainers")
     implementation("org.springframework.boot:spring-boot-devtools")
 
+    //Lombok dependencies
     compileOnly("org.projectlombok:lombok")
     annotationProcessor("org.projectlombok:lombok")
+
+    //Test dependencies
     testImplementation("org.testcontainers:junit-jupiter")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.11.4")
+    testImplementation("org.junit.platform:junit-platform-suite:1.11.4")
 }
 
 tasks.test {
     useJUnitPlatform()
 }
 
+val jvm_version = 17
+
 kotlin {
-    jvmToolchain(17)
+    jvmToolchain(jvm_version)
 }
 
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(17)
+        languageVersion = JavaLanguageVersion.of(jvm_version)
     }
 }

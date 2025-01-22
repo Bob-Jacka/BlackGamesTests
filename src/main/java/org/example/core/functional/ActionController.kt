@@ -1,7 +1,10 @@
 package org.example.core.functional
 
+import com.codeborne.selenide.ElementsCollection
 import com.codeborne.selenide.Selenide
+import com.codeborne.selenide.SelenideElement
 import org.example.core.settings.*
+import org.openqa.selenium.By
 import java.util.*
 
 object ActionController {
@@ -13,9 +16,7 @@ object ActionController {
      */
     @JvmStatic
     fun click_On(whereToClick: ElemPos) {
-        wait_For(2)
         Selenide.webdriver().driver().actions().moveToLocation(whereToClick.getX(), whereToClick.getY()).click()
-        wait_For(2)
     }
 
     /**
@@ -33,7 +34,7 @@ object ActionController {
     }
 
     /**
-     * Метод дл ввода символов с клавиатуры в выделенное поле
+     * Метод для ввода символов с клавиатуры в выделенное поле
      */
     @JvmStatic
     fun enter_By_Keyboard(where_to_enter: ElemPos, enteredChars: string) {
@@ -46,7 +47,7 @@ object ActionController {
      * Проверяется вхождение введенного значения в список (находится в настройках)
      */
     @JvmStatic
-    fun enter_result(): bool {
+    fun enter_Result(): bool {
         println(everyTest_msg)
         print(cursor)
         val entered: string = Scanner(System.`in`).toString()
@@ -66,5 +67,21 @@ object ActionController {
             return true
         }
         return false
+    }
+
+    /**
+     * Just wrapper function for Selenide $ function
+     */
+    @JvmStatic
+    fun get_element(xpathSelector: string): SelenideElement {
+        return Selenide.`$`(By.xpath(xpathSelector))
+    }
+
+    /**
+     * Just wrapper function for Selenide '$$' function
+     */
+    @JvmStatic
+    fun get_elements(xpathSelector: string): ElementsCollection {
+        return Selenide.`$$`(By.xpath(xpathSelector))
     }
 }

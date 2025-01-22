@@ -1,4 +1,4 @@
-package org.example.core.pages.Slots
+package org.example.core.games.Slots
 
 import org.example.core.functional.ActionController.click_On
 import org.example.core.functional.ElemPos
@@ -23,10 +23,6 @@ class BaseSlot : ISlot {
 
     override fun start_game() {
         click_On(play_btn)
-    }
-
-    override fun bet() {
-        click_On(bet_btn)
     }
 
     override fun get_in_rules() {

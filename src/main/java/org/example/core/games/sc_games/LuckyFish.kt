@@ -1,20 +1,22 @@
-package org.example.core.pages.sc_games
+package org.example.core.games.sc_games
 
 import org.example.core.functional.*
 import org.example.core.functional.ActionController.click_On
-import org.example.core.pages.BetBlock
+import org.example.core.games.BetBlock
 
-class LuckyFish : IGameSC, IAuto, IPreselects, ICrashGame {
+class LuckyFish : IGameSC, ICrashGame, IEAuto, IEPreselects {
+
+    //TODO заменить все todo и нулевые позиции и методы со слэшами
 
     override var isSound = false
 
     override val play_btn: ElemPos = ElemPos(959, 750)
     override val history_btn: ElemPos = ElemPos(1780, 230)
     override val first_block: BetBlock = TODO()
-    override val second_block: BetBlock
+    override val second_block: BetBlock = TODO("Возможно будет реализовано позже, но пока в игре только один блок")
 
     override val balance_btn: ElemPos = ElemPos(960, 940)
-    override val settings_btn: ElemPos = TODO()
+    override val settings_btn: ElemPos = ElemPos(0, 0)
     override val sound_btn: ElemPos = ElemPos(1740, 185)
 
     private val bet_btn: ElemPos = ElemPos(957, 870)
@@ -32,7 +34,7 @@ class LuckyFish : IGameSC, IAuto, IPreselects, ICrashGame {
     private val plus_bet: ElemPos = ElemPos(970, 780)
     override val input_field_bet: ElemPos = ElemPos(900, 780)
 
-    //preselects
+    //Preselects
     override val one: ElemPos = ElemPos(810, 820)
     override val two: ElemPos = ElemPos(870, 820)
     override val three: ElemPos = ElemPos(920, 820)
@@ -49,7 +51,7 @@ class LuckyFish : IGameSC, IAuto, IPreselects, ICrashGame {
     }
 
     override fun open_settings() {
-        TODO("Not yet implemented")
+        //
     }
 
     override fun enter_blockchain() {
@@ -81,10 +83,6 @@ class LuckyFish : IGameSC, IAuto, IPreselects, ICrashGame {
 
     fun show_gameinfo() {
         click_On(game_info)
-    }
-
-    override fun bet() {
-        click_On(bet_btn)
     }
 
     override fun enable_autobet(which_block: int, elemPos: ElemPos?) {
@@ -129,15 +127,15 @@ class LuckyFish : IGameSC, IAuto, IPreselects, ICrashGame {
         click_On(four)
     }
 
-    override fun bet_on_block(which_block: BetBlock) {
-        TODO("Not yet implemented")
-    }
-
     override fun get_first_block(): BetBlock {
-        TODO("Not yet implemented")
+        return first_block
     }
 
     override fun get_second_block(): BetBlock {
-        TODO("Not yet implemented")
+        return second_block
+    }
+
+    fun bet() {
+        click_On(bet_btn)
     }
 }

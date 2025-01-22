@@ -1,19 +1,18 @@
-package org.example.core.pages.sc_games
+package org.example.core.games.sc_games
 
+import org.example.core.functional.*
 import org.example.core.functional.ActionController.click_On
-import org.example.core.functional.ElemPos
-import org.example.core.functional.IGameSC
-import org.example.core.functional.bool
-import org.example.core.functional.int
 
-class Pirate : IGameSC {
+class Pirate : IGameSC, ICasualGame {
+
+    //TODO заменить нулевые координаты и методы с двумя слэшами
 
     override var isSound = false
 
-    override val settings_btn: ElemPos = TODO()
+    override val settings_btn: ElemPos = ElemPos(0, 0)
     override val play_btn: ElemPos = ElemPos(960, 870)
-    private val minus_bet = ElemPos(890, 890)
-    private val plus_bet = ElemPos(1030, 890)
+    override val downBet_btn = ElemPos(890, 890)
+    override val upBet_btn = ElemPos(1030, 890)
     override val balance_btn = ElemPos(960, 950)
     override val history_btn = ElemPos(1800, 230)
 
@@ -23,27 +22,16 @@ class Pirate : IGameSC {
 
     override val game_info = ElemPos(1710, 190)
     override val sound_btn = ElemPos(1750, 190)
+    override val playAudioEffects_btn: ElemPos = ElemPos(0, 0)
 
     private val blockchaininfo_btn = ElemPos(1800, 280)
-
-    fun payOnRed() {
-        click_On(all_red)
-    }
-
-    fun payOnBlack() {
-        click_On(all_black)
-    }
-
-    fun payOnMixed() {
-        click_On(mixed)
-    }
 
     override fun get_in_history() {
         click_On(history_btn)
     }
 
     override fun open_settings() {
-        TODO("Not yet implemented")
+        //
     }
 
     override fun enter_blockchain() {
@@ -53,11 +41,11 @@ class Pirate : IGameSC {
     override fun change_bet(up: bool, howMany: int) {
         if (up) {
             repeat(howMany) {
-                click_On(plus_bet)
+                click_On(upBet_btn)
             }
         } else {
             repeat(howMany) {
-                click_On(minus_bet)
+                click_On(downBet_btn)
             }
         }
     }
@@ -85,7 +73,31 @@ class Pirate : IGameSC {
         }
     }
 
-    override fun bet() {
-        TODO("Not yet implemented")
+    override fun bet_on_stake(stake_number: int) {
+        when (stake_number) {
+            0 -> {
+                payOnRed()
+            }
+
+            1 -> {
+                payOnMixed()
+            }
+
+            2 -> {
+                payOnBlack()
+            }
+        }
+    }
+
+    fun payOnRed() {
+        click_On(all_red)
+    }
+
+    fun payOnBlack() {
+        click_On(all_black)
+    }
+
+    fun payOnMixed() {
+        click_On(mixed)
     }
 }

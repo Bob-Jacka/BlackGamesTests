@@ -4,91 +4,103 @@ import org.example.core.entities.PageDistributionService
 import org.example.core.entities.operator.FairSpin
 import org.example.core.entities.operator.SprutCloud
 import org.example.core.entities.operator.Web3BlockChain
-import org.example.core.enums.Stages
-import org.example.core.enums.Stages.PROD
-import org.example.core.enums.Stages.SLOT_PROD
-import org.example.core.functional.ActionController.wait_For
+import org.example.core.enums.Stages_web_addresses
+import org.example.core.enums.Stages_web_addresses.PROD
+import org.example.core.enums.Stages_web_addresses.SLOT_PROD
 import org.example.core.functional.IGame
 import org.example.core.functional.IGameList
 import org.example.core.functional.IStageOperator
+import org.example.core.functional.string
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.SpringBootConfiguration
+import org.springframework.boot.autoconfigure.SpringBootApplication
+import org.springframework.boot.runApplication
 import org.springframework.boot.test.context.TestConfiguration
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.ComponentScan
 
 /**
- * Config file for main architecture
+ * Config file for main architecture.
+ * Methods and companion values are structured in way of invoking
  */
-//@Profile("Stable")
+@ComponentScan(basePackages = ["org.example.core.entities", "org.example.core.games"])
 @SpringBootConfiguration
-@ComponentScan(basePackages = ["org.example.core.entities"])
 open class Config {
 
-    @Autowired
-    private lateinit var pageDistribution: PageDistributionService
+    companion object BeanFactory {
 
-    @Autowired
-    private lateinit var operator: IStageOperator
+        @Autowired
+        private lateinit var pageDistribution: PageDistributionService
 
-    @Autowired
-    private lateinit var gameList: IGameList
+        @Autowired
+        private lateinit var operator: IStageOperator
 
-    @Autowired
-    private lateinit var game: IGame
+        @Autowired
+        private lateinit var gameList: IGameList
 
-    @Bean
-    open fun pageDistribution(): PageDistributionService? {
-        return PageDistributionService.getInstance(Stages.STABLE)
-    }
+        @Autowired
+        private lateinit var game: IGame
 
-    @Bean
-    open fun gameList(): IGameList {
-        gameList = operator.login_into_account()
-        return gameList
-    }
-
-    @Bean
-    open fun operator(): IStageOperator {
-        when (pageDistribution.getStage()) {
-            PROD -> {
-                wait_For(2)
-                operator = FairSpin()
-            }
-
-            SLOT_PROD -> {
-                wait_For(2)
-                operator = Web3BlockChain()
-            }
-
-            Stages.DEV -> {
-                wait_For(2)
-                operator = SprutCloud()
-            }
-
-            Stages.STABLE -> {
-                wait_For(2)
-                operator = SprutCloud()
-            }
-
-            Stages.PREPROD -> {
-                wait_For(2)
-                operator = SprutCloud()
+        @Bean
+        fun pageDistribution(
+            @Value("\${app.stage.name}") stages_string: string, @Value("\${app.stage.browser}") stages_browser: string,
+                            ): PageDistributionService {
+            try {
+                val distService: PageDistributionService =
+                    PageDistributionService.getInstance(stages_string, stages_browser)
+                pageDistribution = distService
+                return pageDistribution
+            } catch (e: Exception) {
+                println(e.stackTrace)
+                throw Exception("Return value is null")
             }
         }
-        return operator
-    }
 
-    @Bean
-    open fun game(): IGame {
-        return game
-    }
+        @Bean
+        fun operator(): IStageOperator {
+            when (pageDistribution.getStage()) {
+                PROD -> {
+                    operator = FairSpin()
+                }
 
-    fun getGame(): IGame? {
-        if (game != null) {
+                SLOT_PROD -> {
+                    operator = Web3BlockChain()
+                }
+
+                Stages_web_addresses.DEV -> {
+                    operator = SprutCloud()
+                }
+
+                Stages_web_addresses.STABLE -> {
+                    operator = SprutCloud()
+                }
+
+                Stages_web_addresses.PREPROD -> {
+                    operator = SprutCloud()
+                }
+            }
+            return operator
+        }
+
+        @Bean
+        fun gameList(): IGameList {
+            gameList = operator.login_into_account()
+            return gameList
+        }
+
+        @Bean
+        fun game(@Value("\${app.stage.game}") game_name: string): IGame {
+            game = gameList.get_game(game_name)
             return game
         }
-        return null
+
+        fun getGame(): IGame? {
+            if (game != null) {
+                return game
+            }
+            return null
+        }
     }
 
     fun getOperator(): IStageOperator? {
@@ -104,6 +116,16 @@ open class Config {
         }
         return null
     }
+}
+
+/**
+ * Spring boot app entry point
+ */
+@SpringBootApplication
+open class Application
+
+fun main(args: Array<String>) {
+    runApplication<Application>(*args)
 }
 
 @TestConfiguration(proxyBeanMethods = false)

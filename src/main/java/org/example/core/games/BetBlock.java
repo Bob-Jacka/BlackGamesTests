@@ -1,8 +1,8 @@
-package org.example.core.pages;
+package org.example.core.games;
 
-import org.example.core.functional.IAuto;
-import org.example.core.functional.IBetBlock;
-import org.example.core.functional.IPreselects;
+import org.example.core.functional.IEAuto;
+import org.example.core.functional.IEBetBlock;
+import org.example.core.functional.IEPreselects;
 import org.jetbrains.annotations.NotNull;
 import org.openqa.selenium.Point;
 
@@ -14,7 +14,7 @@ import static org.example.core.functional.ExtensionsKt.increase_or_decrease;
  * first bet block of mooscape game
  * if you want second block, get first block elem and transform it with
  */
-public class BetBlock implements IAuto, IPreselects, IBetBlock {
+public class BetBlock implements IEAuto, IEPreselects, IEBetBlock {
 
     private Point bet_btn = new Point(861, 855);
     private Point autobet_btn = new Point(625, 795);
@@ -193,6 +193,11 @@ public class BetBlock implements IAuto, IPreselects, IBetBlock {
 
     public void enter_bet(String value) {
         enter_By_Keyboard(bet_input_field, value);
+    }
+
+    @Override
+    public @NotNull Point getBet_btn() {
+        return bet_btn;
     }
 
     public static class BetBlockBuilder {

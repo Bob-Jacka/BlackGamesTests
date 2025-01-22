@@ -3,6 +3,7 @@ package org.example.core.entities.operator
 import com.codeborne.selenide.SelenideElement
 import org.example.core.annotation.BetOperator
 import org.example.core.entities.gameLists.GamesPageSprut
+import org.example.core.functional.ActionController.get_element
 import org.example.core.functional.IStageOperator
 
 /**
@@ -11,10 +12,12 @@ Site for slots
 @BetOperator
 class Web3BlockChain : IStageOperator {
 
-    override val user_name_field: SelenideElement? = null
-    override val user_password_field: SelenideElement? = null
+    //TODO добавить локаторы
 
-    override val login_btn: SelenideElement = TODO()
+    override val user_name_field: SelenideElement? = get_element("")
+    override val user_password_field: SelenideElement? = get_element("")
+
+    override val login_btn: SelenideElement = get_element("")
 
     constructor()
 

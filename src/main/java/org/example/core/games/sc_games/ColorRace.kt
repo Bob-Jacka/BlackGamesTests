@@ -1,28 +1,28 @@
-package org.example.core.pages.sc_games
+package org.example.core.games.sc_games
 
+import org.example.core.functional.*
 import org.example.core.functional.ActionController.click_On
-import org.example.core.functional.ElemPos
-import org.example.core.functional.IGameSC
-import org.example.core.functional.bool
-import org.example.core.functional.int
 
-class ColorRace : IGameSC {
+class ColorRace : IGameSC, ICasualGame {
+
+    //TODO заменить все todo и нулевые позиции и методы со слэшами
 
     override var isSound = false
-    override val settings_btn: ElemPos = TODO()
+
+    override val settings_btn: ElemPos = ElemPos(0, 0)
     override val play_btn: ElemPos = ElemPos(960, 730)
     override val balance_btn: ElemPos = ElemPos(960, 938)
     override val sound_btn: ElemPos = ElemPos(1780, 145)
 
     override val history_btn: ElemPos = ElemPos(1690, 145)
 
-    override val game_info: ElemPos = TODO()
+    override val game_info: ElemPos = ElemPos(0, 0)
 
-    private val upBet_btn: ElemPos = ElemPos(1032, 863)
-    private val lowBet_btn: ElemPos = ElemPos(885, 863)
+    override val upBet_btn: ElemPos = ElemPos(1032, 863)
+    override val downBet_btn: ElemPos = ElemPos(885, 863)
     private val blockchainInfo_btn: ElemPos = ElemPos(1780, 250)
 
-    private val playAudioEffects_btn: ElemPos = ElemPos(1735, 145)
+    override val playAudioEffects_btn: ElemPos = ElemPos(1735, 145)
 
     private val blueBet: ElemPos = ElemPos(820, 780)
     private val greenBet: ElemPos = ElemPos(920, 780)
@@ -38,11 +38,13 @@ class ColorRace : IGameSC {
     }
 
     override fun open_settings() {
-        TODO("Not yet implemented")
+        //
     }
 
-    override fun bet() {
-        TODO("Not yet implemented")
+    override fun bet_on_stake(stake_num: int) {
+        when (stake_num) {
+
+        }
     }
 
     fun payOn_Blue() {
@@ -97,7 +99,7 @@ class ColorRace : IGameSC {
 
         } else {
             repeat(howMany) {
-                click_On(lowBet_btn)
+                click_On(downBet_btn)
             }
         }
     }

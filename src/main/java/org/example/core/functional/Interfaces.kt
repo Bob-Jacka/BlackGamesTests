@@ -2,11 +2,18 @@ package org.example.core.functional
 
 import com.codeborne.selenide.ElementsCollection
 import com.codeborne.selenide.SelenideElement
-import org.example.core.enums.GameName
-import org.example.core.pages.BetBlock
+import org.example.core.games.BetBlock
 
-//All methods in this file should be with underscores and small letters
-//All interfaces names should start with 'I'
+/*
+ RULES:
+
+ All methods in this file should be with underscores
+ All interfaces names should start with 'I'
+
+ Start letter interface identifiers
+ 'I' for interface (for specifying new game types)
+ 'E' for extension (Add new functions, but not type)
+*/
 
 /**
  * Global interface for games ex. Slots or SC
@@ -16,11 +23,6 @@ interface IGame {
     var isSound: bool
     val play_btn: ElemPos
     val sound_btn: ElemPos
-
-    /**
-     * Every game has 'bet' function and nevermind if it slots or sc game
-     */
-    fun bet()
 
     /**
      * Every game has 'start game' function and nevermind if it slots or sc game
@@ -60,7 +62,7 @@ interface ISlot : IGame {
 /**
 Interface with possibility to enable auto bet or auto cash out
  */
-interface IAuto {
+interface IEAuto {
 
     val autocashout_btn: ElemPos
     val autobet_btn: ElemPos
@@ -92,7 +94,7 @@ interface IAuto {
 Interface for games with preselects available
 'ps' at the of the name means preselect
  */
-interface IPreselects {
+interface IEPreselects {
 
     val one: ElemPos
     val two: ElemPos
@@ -115,9 +117,24 @@ interface ICrashGame {
     val input_field_coef: ElemPos
     val input_field_bet: ElemPos
 
-    fun bet_on_block(which_block: BetBlock)
     fun get_first_block(): BetBlock
     fun get_second_block(): BetBlock
+}
+
+/**
+ * Interface for current casual game implementation
+ */
+interface ICasualGame {
+
+    val playAudioEffects_btn: ElemPos
+    val upBet_btn: ElemPos
+    val downBet_btn: ElemPos
+
+    /**
+    Stake num from left to right.
+    ex. in Pirate game there are 3 stakes, left is all_red on has num 0 (depending on realization)
+     */
+    fun bet_on_stake(stake_number: int)
 }
 
 /**
@@ -169,14 +186,15 @@ interface IGameList {
      *         }
      *         return game_to_return;
      */
-    fun get_game(gameName: GameName): IGame
+    fun get_game(gameName: string): IGame
 }
 
 /**
  * Interface for bet block for crash games
  */
-interface IBetBlock {
+interface IEBetBlock {
 
+    val bet_btn: ElemPos
     val plus_bet: ElemPos
     val minus_bet: ElemPos
     val bet_input_field: ElemPos

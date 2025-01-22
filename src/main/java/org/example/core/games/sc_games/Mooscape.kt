@@ -1,13 +1,15 @@
-package org.example.core.pages.sc_games
+package org.example.core.games.sc_games
 
 import org.example.core.functional.*
 import org.example.core.functional.ActionController.click_On
-import org.example.core.pages.BetBlock
+import org.example.core.games.BetBlock
 
 class Mooscape : IGameSC, ICrashGame {
 
+    //TODO заменить все todo и нулевые позиции и методы со слэшами
+
     override var isSound = false
-    override val game_info: ElemPos = TODO()
+    override val game_info: ElemPos = ElemPos(0, 0)
 
     override val first_block = BetBlock()
     override val second_block: BetBlock =
@@ -31,25 +33,22 @@ class Mooscape : IGameSC, ICrashGame {
 
     override val settings_btn = ElemPos(1788, 185)
     override val sound_btn: ElemPos = ElemPos(1412, 185)
-    override fun bet() {
-        TODO("Not yet implemented")
-    }
 
     override val balance_btn = ElemPos(1679, 185)
-    override val history_btn: ElemPos = TODO()
+    override val history_btn: ElemPos = ElemPos(0, 0)
     private val cachier_btn: ElemPos = ElemPos(116, 106)
     private val how_to_play = ElemPos(1518, 185)
     private val block_chain_info = ElemPos(1785, 290)
 
-    override val input_field_coef: ElemPos = TODO()
-    override val input_field_bet: ElemPos = TODO()
+    override val input_field_coef: ElemPos = ElemPos(0, 0)
+    override val input_field_bet: ElemPos = ElemPos(0, 0)
 
     override fun start_game() {
         click_On(play_btn)
     }
 
     override fun get_in_history() {
-        TODO("Not yet implemented")
+        //
     }
 
     override fun enter_blockchain() {
@@ -68,7 +67,7 @@ class Mooscape : IGameSC, ICrashGame {
     }
 
     override fun change_bet(up: bool, howMany: int) {
-        TODO("Not yet implemented")
+        //
     }
 
     fun open_cachier() {
@@ -85,10 +84,6 @@ class Mooscape : IGameSC, ICrashGame {
 
     fun open_balance() {
         click_On(balance_btn)
-    }
-
-    override fun bet_on_block(which_block: BetBlock) {
-        TODO("Not yet implemented")
     }
 
     override fun get_first_block(): BetBlock {

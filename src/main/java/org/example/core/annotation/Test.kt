@@ -61,7 +61,7 @@ annotation class Test(
     val story: string = "",
 
     /*
-    How to take annotation to function
+    How to take annotation into function
 
     fun getData(test: Test) {
         print(test.name) //prints test name

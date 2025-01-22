@@ -37,6 +37,7 @@ fun Point.forSecondBlock(): Point {
  * @param elemMinus элемент контроля уменьшения ставки
  * @sample increase_or_decrease(up,howMany,plus_coef_btn.getFor_secondBlock (), minus_coef_btn.getFor_secondBlock())
  */
+@Deprecated(message = "since 20.01.2025")
 fun increase_or_decrease(direction: bool, howMany: int, elemPlus: ElemPos, elemMinus: ElemPos) {
     if (direction) {
         repeat(howMany) {

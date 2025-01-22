@@ -3,6 +3,7 @@ package org.example.core.enums;
 import lombok.Getter;
 
 @Getter
+@Deprecated(since = "20.01.2025")
 public enum GameId {
 
     COLOR_RACE_ENV2(3),

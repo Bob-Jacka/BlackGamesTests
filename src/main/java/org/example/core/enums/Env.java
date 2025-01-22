@@ -3,6 +3,7 @@ package org.example.core.enums;
 import lombok.Getter;
 
 @Getter
+@Deprecated(since = "20.01.2025")
 public enum Env {
 
     ENV02("env02"),
