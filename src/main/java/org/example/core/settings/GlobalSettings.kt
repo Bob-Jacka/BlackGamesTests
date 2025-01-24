@@ -8,7 +8,7 @@ val failedValues = listOf<string>("fail", "Fail", "0")
 val skipValues = listOf<string>("skip", "Skipped", "skipped")
 
 var everyTest_msg: string =
-    "Enter " + passValues.joinToString() + "for success test, " +
-            failedValues.joinToString() + " for failure test or " +
+    "Enter: " + passValues.joinToString() + " for success test; " +
+            failedValues.joinToString() + " for failure test; or " +
             skipValues.joinToString() + " to skip"
 const val cursor: string = ">> "

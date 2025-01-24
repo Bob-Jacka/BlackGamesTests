@@ -1,3 +1,5 @@
+import org.example.core.functional.ActionController;
+
 import java.io.IOException;
 import java.util.Arrays;
 
@@ -45,11 +47,14 @@ public class Main {
         return false;
     }
 
+//        public static void main(String[] args) {
+//        if (check_gradle() && check_allure()) {
+//            full_chain();
+//        } else {
+//            System.out.println("Checks failed");
+//        }
+//    }
     public static void main(String[] args) {
-        if (check_gradle() && check_allure()) {
-            full_chain();
-        } else {
-            System.out.println("Checks failed");
-        }
+        ActionController.get_terminal();
     }
 }

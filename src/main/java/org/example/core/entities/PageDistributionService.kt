@@ -1,11 +1,15 @@
 package org.example.core.entities
 
-import com.codeborne.selenide.AssertionMode
-import com.codeborne.selenide.Configuration
-import com.codeborne.selenide.Selenide
-import com.codeborne.selenide.WebDriverRunner
+import com.codeborne.selenide.*
 import org.example.core.annotation.DistributionPage
+import org.example.core.entities.operator.FairSpin
+import org.example.core.entities.operator.SprutCloud
+import org.example.core.entities.operator.Web3BlockChain
 import org.example.core.enums.Stages_web_addresses
+import org.example.core.enums.Stages_web_addresses.PROD
+import org.example.core.enums.Stages_web_addresses.SLOT_PROD
+import org.example.core.functional.ActionController.wait_For
+import org.example.core.functional.IStageOperator
 import org.example.core.functional.string
 import java.awt.Dimension
 import java.awt.Toolkit
@@ -36,17 +40,19 @@ open class PageDistributionService {
             }
             Configuration.browser = browser
             Configuration.webdriverLogsEnabled = true
-            Configuration.timeout = 5_000
-            Configuration.pageLoadTimeout = 5_000
+            Configuration.timeout = 100_000
+            Configuration.pageLoadTimeout = 15_000
             Configuration.screenshots = false
-            Configuration.pollingInterval = 10_000
+            Configuration.selectorMode = SelectorMode.Sizzle
+
+            Configuration.pollingInterval = 15_000
 
 //            Configuration.browserPosition = getForSecondMonitor()
-
-            Configuration.reopenBrowserOnFail = false
+            Configuration.reopenBrowserOnFail = true
             Configuration.fastSetValue = false
             Configuration.assertionMode = AssertionMode.SOFT
             Selenide.open(URL(this.stage.stage_name))
+            wait_For(1)
             WebDriverRunner.getWebDriver().manage().window().maximize()
             return pagedist!!
         }
@@ -63,8 +69,8 @@ open class PageDistributionService {
         }
     }
 
-    constructor() {
-        println("Default constructor invoked")
+    private constructor() {
+        println("Page distribution constructor invoked")
     }
 
     /**
@@ -72,9 +78,35 @@ open class PageDistributionService {
      */
     fun getStage(): Stages_web_addresses {
         if (pagedist != null) {
-            println("Current stage is $stage")
+            println("Current stage is ${stage.stage_name}")
             return stage
         }
         return stage
+    }
+
+    fun getOperator(): IStageOperator {
+        val operator: IStageOperator
+        when (stage) {
+            PROD -> {
+                operator = FairSpin()
+            }
+
+            SLOT_PROD -> {
+                operator = Web3BlockChain()
+            }
+
+            Stages_web_addresses.DEV -> {
+                operator = SprutCloud()
+            }
+
+            Stages_web_addresses.STABLE -> {
+                operator = SprutCloud()
+            }
+
+            Stages_web_addresses.PREPROD -> {
+                operator = SprutCloud()
+            }
+        }
+        return operator
     }
 }

@@ -2,6 +2,7 @@ package org.example.core.annotation
 
 import org.example.core.functional.bool
 import org.example.core.functional.string
+import org.springframework.context.annotation.Scope
 import org.springframework.stereotype.Component
 
 /**
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Component
  * @see org.example.core.entities.gameLists.GamesPageSprut
  */
 @Component
+@Scope("singleton")
 annotation class BetGamesPage(
 
     val name: string = "",

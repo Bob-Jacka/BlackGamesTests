@@ -26,6 +26,10 @@ class Pirate : IGameSC, ICasualGame {
 
     private val blockchaininfo_btn = ElemPos(1800, 280)
 
+    constructor() {
+        println("Pirate constructor invoked")
+    }
+
     override fun get_in_history() {
         click_On(history_btn)
     }

@@ -19,7 +19,7 @@ dependencies {
     implementation(platform("io.qameta.allure:allure-junit5:2.25.0"))
     implementation("org.jetbrains.kotlin:kotlin-stdlib:2.0.20")
     implementation("io.qameta.allure:allure-selenide:2.20.1")
-    implementation("com.codeborne:selenide:7.4.0")
+    implementation("com.codeborne:selenide:7.7.0")
     implementation("org.jetbrains.dokka:dokka-gradle-plugin:2.0.0")
 
     //Spring dependencies
@@ -36,6 +36,7 @@ dependencies {
     testImplementation("org.testcontainers:junit-jupiter")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.11.4")
     testImplementation("org.junit.platform:junit-platform-suite:1.11.4")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.1")
 }
 
 tasks.test {

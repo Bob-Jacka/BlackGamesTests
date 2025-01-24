@@ -35,9 +35,10 @@ public class GamesPageSprut implements IGameList {
     private final SelenideElement platforms = get_element("//select[@name='platform' and @id='selectPlatform']");
     private final SelenideElement provider = get_element("//select[@name='provider']");
     private final SelenideElement currency = get_element("//select[@name='currency']");
+//    private final SelenideElement top_up_balance = get_element("");
 
     public GamesPageSprut() {
-
+        System.out.println("Games page sprut constructor invoked");
     }
 
     @NotNull
@@ -92,7 +93,7 @@ public class GamesPageSprut implements IGameList {
             return new Pirate();
         } else if (env == Env.ENV03) {
             changeProvider();
-            gameList.get(PIRATE_ENV3.getId()).$("b").click();
+            gameList.get(PIRATE_ENV2.getId()).$("b").$("a").click();
             return new Pirate();
         } else {
             throw new RuntimeException("error in getting pirate game");

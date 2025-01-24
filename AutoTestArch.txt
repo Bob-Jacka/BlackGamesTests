@@ -1,13 +1,12 @@
 Config -> {
-
-PageDistributionService.getStage() ->
-	{
-	FairSpin -> GamesPageFairSpin -> Игры (Mooscape, LuckyFish, Pirate, ColorRace) -> Тесты (Positive | Negative)
-	или
-	SprutCloud -> GamesPageSprut -> Игры (Mooscape, LuckyFish, Pirate, ColorRace) -> Тесты (Positive | Negative)
-	или
-	Web3BlockChain -> GamesPageSlots (slots) -> Слоты -> Тесты ()
-    }
+    PageDistributionService.getStage() ->
+        {
+        FairSpin -> GamesPageFairSpin -> Игры (Mooscape, LuckyFish, Pirate, ColorRace) -> BaseTest -> Тесты (Positive | Negative)
+        или
+        SprutCloud -> GamesPageSprut -> Игры (Mooscape, LuckyFish, Pirate, ColorRace) -> BaseTest -> Тесты (Positive | Negative)
+        или
+        Web3BlockChain -> GamesPageSlots (slots) -> Слоты -> BaseTest -> Тесты ()
+        }
 }
 
 "->" - означает последовательность вызовов объектов
@@ -18,4 +17,5 @@ PageDistribution - Инициализация драйвера браузере,
 Fair spin - вход в аккаунт на сайте оператора (Page object);
 GamesPageSprut - Page object выбора игры, получение доступа к "созданию" игры;
 Игры - непосредственно игра с уникальными действиями;
+BaseTest - "пре-" и "пост-" хуки для тестов. Запуск Spring boot контекста
 Тесты - автоматизированные тесты в директории "test";
