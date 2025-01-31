@@ -1,8 +1,8 @@
 package org.example.core.games.sc_games
 
-import org.example.core.functional.*
-import org.example.core.functional.ActionController.click_On
 import org.example.core.games.BetBlock
+import org.example.core.main_functionalities.*
+import org.example.core.main_functionalities.ActionController.click_On
 
 class LuckyFish : IGameSC, ICrashGame, IEAuto, IEPreselects {
 
@@ -10,21 +10,18 @@ class LuckyFish : IGameSC, ICrashGame, IEAuto, IEPreselects {
 
     override var isSound = false
 
-    override val play_btn: ElemPos = ElemPos(959, 750)
+    override val play_btn: ElemPos = ElemPos(959, 780)
     override val history_btn: ElemPos = ElemPos(1780, 230)
     override val first_block: BetBlock = TODO()
     override val second_block: BetBlock = TODO("Возможно будет реализовано позже, но пока в игре только один блок")
-
     override val balance_btn: ElemPos = ElemPos(960, 940)
     override val settings_btn: ElemPos = ElemPos(0, 0)
     override val sound_btn: ElemPos = ElemPos(1740, 185)
-
     private val bet_btn: ElemPos = ElemPos(957, 870)
     override val autobet_btn: ElemPos = ElemPos(800, 730)
     override val autocashout_btn: ElemPos = ElemPos(900, 730)
     override val game_info: ElemPos = ElemPos(1700, 185)
-
-    private val blockchain_info: ElemPos = ElemPos(1780, 290)
+    override val blockchaininfo_btn: ElemPos = ElemPos(1780, 290)
 
     private val minus_coef: ElemPos = ElemPos(1030, 730)
     private val plus_coef: ElemPos = ElemPos(1120, 730)
@@ -35,27 +32,25 @@ class LuckyFish : IGameSC, ICrashGame, IEAuto, IEPreselects {
     override val input_field_bet: ElemPos = ElemPos(900, 780)
 
     //Preselects
-    override val one: ElemPos = ElemPos(810, 820)
-    override val two: ElemPos = ElemPos(870, 820)
-    override val three: ElemPos = ElemPos(920, 820)
-    override val four: ElemPos = ElemPos(980, 820)
-
-    private val reload_btn: ElemPos = ElemPos(963, 735)
+    override val one_elem: ElemPos = ElemPos(810, 820)
+    override val two_elem: ElemPos = ElemPos(870, 820)
+    override val three_elem: ElemPos = ElemPos(920, 820)
+    override val four_elem: ElemPos = ElemPos(980, 820)
 
     override fun start_game() {
         click_On(play_btn)
     }
 
-    override fun get_in_history() {
+    override fun enter_in_history() {
         click_On(history_btn)
     }
 
-    override fun open_settings() {
-        //
+    override fun enter_settings() {
+        click_On(settings_btn)
     }
 
     override fun enter_blockchain() {
-        click_On(blockchain_info)
+        click_On(blockchaininfo_btn)
     }
 
     override fun set_sound_on(state: bool) {
@@ -81,7 +76,7 @@ class LuckyFish : IGameSC, ICrashGame, IEAuto, IEPreselects {
         }
     }
 
-    fun show_gameinfo() {
+    override fun enter_game_info() {
         click_On(game_info)
     }
 
@@ -112,19 +107,19 @@ class LuckyFish : IGameSC, ICrashGame, IEAuto, IEPreselects {
     }
 
     override fun get_first_ps() {
-        click_On(one)
+        click_On(one_elem)
     }
 
     override fun get_second_ps() {
-        click_On(two)
+        click_On(two_elem)
     }
 
     override fun get_third_ps() {
-        click_On(three)
+        click_On(three_elem)
     }
 
     override fun get_fourth_ps() {
-        click_On(four)
+        click_On(four_elem)
     }
 
     override fun get_first_block(): BetBlock {
@@ -133,6 +128,10 @@ class LuckyFish : IGameSC, ICrashGame, IEAuto, IEPreselects {
 
     override fun get_second_block(): BetBlock {
         return second_block
+    }
+
+    override fun enter_settings_btn(): ElemPos {
+        return settings_btn
     }
 
     fun bet() {

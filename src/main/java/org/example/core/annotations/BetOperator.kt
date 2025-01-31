@@ -1,7 +1,7 @@
-package org.example.core.annotation
+package org.example.core.annotations
 
-import org.example.core.functional.bool
-import org.example.core.functional.string
+import org.example.core.main_functionalities.bool
+import org.example.core.main_functionalities.string
 import org.springframework.context.annotation.Scope
 import org.springframework.stereotype.Component
 

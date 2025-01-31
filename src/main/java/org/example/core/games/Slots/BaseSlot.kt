@@ -1,10 +1,10 @@
 package org.example.core.games.Slots
 
-import org.example.core.functional.ActionController.click_On
-import org.example.core.functional.ElemPos
-import org.example.core.functional.ISlot
-import org.example.core.functional.bool
-import org.example.core.functional.int
+import org.example.core.main_functionalities.ActionController.click_On
+import org.example.core.main_functionalities.ElemPos
+import org.example.core.main_functionalities.ISlot
+import org.example.core.main_functionalities.bool
+import org.example.core.main_functionalities.int
 
 class BaseSlot : ISlot {
 

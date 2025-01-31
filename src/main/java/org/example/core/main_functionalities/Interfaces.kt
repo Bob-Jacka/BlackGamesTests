@@ -1,42 +1,65 @@
-package org.example.core.functional
+package org.example.core.main_functionalities
 
 import com.codeborne.selenide.ElementsCollection
 import com.codeborne.selenide.SelenideElement
+import org.example.core.enums.Stages_web_addresses
 import org.example.core.games.BetBlock
 
 /*
- RULES:
+ INTERFACES RULES:
 
- All methods in this file should be with underscores
- All interfaces names should start with 'I'
+ All methods in this file should be with underscores.
+ All interfaces names should start with 'I'.
 
- Start letter interface identifiers
+ Start letter interface identifiers:
  'I' for interface (for specifying new game types)
  'E' for extension (Add new functions, but not type)
+
+ Ending of 'special' web elements:
+ '_field' - for field elements
+ '_btn' - for button elements
+
+ Starting of 'special' interface methods
+ 'get_' - for element getters
+ 'enter_' - methods for change game state, enter some game page
+ 'enable_' - for method that enable something and change game state
 */
 
 /**
- * Global interface for games ex. Slots or SC
+ * Interface for distribution service.
+ */
+interface IDistributionServ {
+
+    fun get_Stage(): Stages_web_addresses
+    fun get_Operator(): IStageOperator
+}
+
+/**
+ * Global interface for games ex. Slots or SC.
  */
 interface IGame {
 
+    /**
+     * State variable of game
+     */
     var isSound: bool
+
     val play_btn: ElemPos
     val sound_btn: ElemPos
 
     /**
-     * Every game has 'start game' function and nevermind if it slots or sc game
+     * Every game has 'start game' function and doesn't matter if it slots or sc game.
      */
     fun start_game()
 
     /**
-     * Every game has 'turn on sound' function and nevermind if it slots or sc game
+     * Every game has 'turn on sound' function and doesn't matter if it slots or sc game.
      */
     fun set_sound_on(state: bool)
 }
 
 /**
-Interface for slot games, ex. viva la pizza, bang bang saloon
+Interface for slot games, ex. viva la pizza, bang bang saloon.
  */
 interface ISlot : IGame {
 
@@ -60,7 +83,7 @@ interface ISlot : IGame {
 }
 
 /**
-Interface with possibility to enable auto bet or auto cash out
+Extender Interface with possibility to enable auto bet or auto cash out.
  */
 interface IEAuto {
 
@@ -68,6 +91,7 @@ interface IEAuto {
     val autobet_btn: ElemPos
 
     /**
+     * Click on auto bet button.
      * @sample
      * override fun enable_autobet(which_block: int, elemPos: ElemPos?) {
      *           when (which_block) {
@@ -79,6 +103,7 @@ interface IEAuto {
     fun enable_autobet(which_block: int, elemPos: ElemPos? = null)
 
     /**
+     * Click on auto cash out button.
      * @sample
      * override fun enable_autocashout(which_block: int, elemPos: ElemPos?) {
      *          when (which_block) {
@@ -91,15 +116,30 @@ interface IEAuto {
 }
 
 /**
-Interface for games with preselects available
-'ps' at the of the name means preselect
+Extender Interface for games with preselects available.
+'ps' at the of the name means - preselect.
  */
 interface IEPreselects {
 
-    val one: ElemPos
-    val two: ElemPos
-    val three: ElemPos
-    val four: ElemPos
+    /**
+     * First preselect
+     */
+    val one_elem: ElemPos
+
+    /**
+     * Second preselect
+     */
+    val two_elem: ElemPos
+
+    /**
+     * Third preselect
+     */
+    val three_elem: ElemPos
+
+    /**
+     * Fourth preselect
+     */
+    val four_elem: ElemPos
 
     fun get_first_ps()
     fun get_second_ps()
@@ -108,7 +148,7 @@ interface IEPreselects {
 }
 
 /**
-Interface for current crash game implementation
+Interface for current crash game implementation.
  */
 interface ICrashGame {
 
@@ -116,13 +156,16 @@ interface ICrashGame {
     val second_block: BetBlock
     val input_field_coef: ElemPos
     val input_field_bet: ElemPos
+    val settings_btn: ElemPos
 
+    fun enter_settings()
     fun get_first_block(): BetBlock
     fun get_second_block(): BetBlock
+    fun enter_settings_btn(): ElemPos
 }
 
 /**
- * Interface for current casual game implementation
+ * Interface for current casual game implementation.
  */
 interface ICasualGame {
 
@@ -138,23 +181,23 @@ interface ICasualGame {
 }
 
 /**
-Interface for current 'sc' game implementation
+Interface for current 'sc' game implementation.
  */
 interface IGameSC : IGame {
 
     val history_btn: ElemPos
     val balance_btn: ElemPos
-    val settings_btn: ElemPos
     val game_info: ElemPos
+    val blockchaininfo_btn: ElemPos
 
-    fun get_in_history()
-    fun open_settings()
+    fun enter_game_info()
+    fun enter_in_history()
     fun enter_blockchain()
     fun change_bet(up: bool, howMany: int)
 }
 
 /**
-Objects that implement this interface are "gate" to game portal
+Objects that implement this interface are "gate" to game portal.
  */
 interface IStageOperator {
 
@@ -167,14 +210,14 @@ interface IStageOperator {
 }
 
 /**
-List with current games and action to receive game object
+List with current games and action to receive game object.
  */
 interface IGameList {
 
     val gameList: ElementsCollection
 
     /**
-     * Method for getting game by GameName enum value
+     * Method for getting game by GameName enum value.
      * @param gameName - enum value for game
      * @sample
      * IGame game_to_return = null;
@@ -190,7 +233,7 @@ interface IGameList {
 }
 
 /**
- * Interface for bet block for crash games
+ * Extender Interface for bet block for crash games.
  */
 interface IEBetBlock {
 
@@ -207,4 +250,17 @@ interface IEBetBlock {
     fun get_minus_coef_btn(): ElemPos
     fun get_plus_coef_btn(): ElemPos
     fun get_coef_input_field(): ElemPos
+}
+
+/**
+ * Extender Interface.
+ * Adds cashier functionality. Supports only in sprut.
+ * Deprecated at creation of the interface.
+ */
+@Deprecated("27.01.2025")
+interface IECashier {
+
+    val cashier_btn: ElemPos
+
+    fun get_cashier()
 }

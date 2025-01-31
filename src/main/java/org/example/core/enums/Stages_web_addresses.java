@@ -10,10 +10,10 @@ public enum Stages_web_addresses {
 
     SLOT_PROD("https://web3blockchaingame.com/");
 
-    private final String stage_name;
+    private final String web_address;
 
     Stages_web_addresses(String name) {
-        this.stage_name = name;
+        this.web_address = name;
     }
 
     /**
@@ -50,7 +50,7 @@ public enum Stages_web_addresses {
         return stages;
     }
 
-    public String getStage_name() {
-        return this.stage_name;
+    public String getWeb_address() {
+        return this.web_address;
     }
 }

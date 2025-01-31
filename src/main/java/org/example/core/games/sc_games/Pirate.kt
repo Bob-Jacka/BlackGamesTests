@@ -1,41 +1,34 @@
 package org.example.core.games.sc_games
 
-import org.example.core.functional.*
-import org.example.core.functional.ActionController.click_On
+import org.example.core.main_functionalities.*
+import org.example.core.main_functionalities.ActionController.click_On
+import org.example.core.main_functionalities.ActionController.wait_For
 
 class Pirate : IGameSC, ICasualGame {
 
-    //TODO заменить нулевые координаты и методы с двумя слэшами
-
     override var isSound = false
 
-    override val settings_btn: ElemPos = ElemPos(0, 0)
-    override val play_btn: ElemPos = ElemPos(960, 870)
-    override val downBet_btn = ElemPos(890, 890)
-    override val upBet_btn = ElemPos(1030, 890)
-    override val balance_btn = ElemPos(960, 950)
-    override val history_btn = ElemPos(1800, 230)
+    override val play_btn: ElemPos = ElemPos(960, 680)
+    override val downBet_btn = ElemPos(890, 870)
+    override val upBet_btn = ElemPos(1030, 870)
+    override val balance_btn = ElemPos(960, 930)
+    override val history_btn = ElemPos(1800, 210)
 
-    private val all_red = ElemPos(780, 800)
-    private val mixed = ElemPos(960, 800)
-    private val all_black = ElemPos(1130, 800)
+    private val all_red = ElemPos(780, 780)
+    private val mixed = ElemPos(960, 780)
+    private val all_black = ElemPos(1140, 780)
 
-    override val game_info = ElemPos(1710, 190)
-    override val sound_btn = ElemPos(1750, 190)
-    override val playAudioEffects_btn: ElemPos = ElemPos(0, 0)
-
-    private val blockchaininfo_btn = ElemPos(1800, 280)
+    override val game_info = ElemPos(1710, 165)
+    override val sound_btn = ElemPos(1750, 165)
+    override val playAudioEffects_btn: ElemPos = ElemPos(1795, 165)
+    override val blockchaininfo_btn = ElemPos(1790, 260)
 
     constructor() {
         println("Pirate constructor invoked")
     }
 
-    override fun get_in_history() {
+    override fun enter_in_history() {
         click_On(history_btn)
-    }
-
-    override fun open_settings() {
-        //
     }
 
     override fun enter_blockchain() {
@@ -59,10 +52,11 @@ class Pirate : IGameSC, ICasualGame {
     }
 
     override fun start_game() {
+        wait_For(1)
         click_On(play_btn)
     }
 
-    fun show_game_info() {
+    override fun enter_game_info() {
         click_On(game_info)
     }
 

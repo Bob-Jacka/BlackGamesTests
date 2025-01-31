@@ -1,10 +1,8 @@
 package org.example.core.settings
 
 import org.example.core.entities.PageDistributionService
-import org.example.core.functional.IGame
-import org.example.core.functional.IGameList
-import org.example.core.functional.IStageOperator
-import org.example.core.functional.string
+import org.example.core.entities.PageDistributionService.SingletonPage.Monitor
+import org.example.core.main_functionalities.*
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.SpringBootConfiguration
@@ -20,9 +18,10 @@ import org.springframework.context.annotation.DependsOn
 import org.springframework.context.annotation.EnableAspectJAutoProxy
 
 /**
- * Config file for main architecture.
- * Creating bins and their util methods.
- * Methods and companion values are structured in way of invoking
+ * Config file for main architecture configuration.
+ * Creating bins and their util methods in DI container.
+ * Methods and companion values are structured in way of invoking.
+ * @see SpringBootConfiguration
  */
 @EnableAspectJAutoProxy
 @ComponentScan(basePackages = ["org.example.core.entities", "org.example.core.games"])
@@ -32,14 +31,14 @@ open class Config {
     companion object SingletonPage {
 
         /**
-         * Экземпляр класса 'PageDistributionService'
+         * Экземпляр класса 'PageDistributionService'.
          * @see PageDistributionService
          */
         @Autowired
         private lateinit var pageDistributionService: PageDistributionService
 
         /**
-         * Экземпляр класса, который наследует интерфейс 'IStageOperator'
+         * Экземпляр класса, который наследует интерфейс 'IStageOperator'.
          * @see IStageOperator
          * @see org.example.core.entities.operator.FairSpin
          * @see org.example.core.entities.operator.SprutCloud
@@ -49,7 +48,7 @@ open class Config {
         private lateinit var operator: IStageOperator
 
         /**
-         * Экземпляр класса, который наследует интерфейс 'IGameList'
+         * Экземпляр класса, который наследует интерфейс 'IGameList'.
          * @see IGameList
          * @see org.example.core.entities.gameLists.GamesPageSprut
          * @see org.example.core.entities.gameLists.GamesPageSlots
@@ -59,7 +58,7 @@ open class Config {
         private lateinit var gameList: IGameList
 
         /**
-         * Экземпляр класса, который наследует интерфейс 'IGame'
+         * Экземпляр класса, который наследует интерфейс 'IGame'.
          * @see IGame
          * @see org.example.core.games.sc_games.ColorRace
          * @see org.example.core.games.sc_games.LuckyFish
@@ -68,6 +67,43 @@ open class Config {
          */
         @Autowired
         private lateinit var game: IGame
+
+        @Autowired
+        private lateinit var waitController: WaitController
+
+        @Autowired
+        private lateinit var loggingController: LoggingController
+
+        /**
+         * DO NOT USE THIS VARIABLE.
+         * @since 30.01.2025
+         */
+        val __res__: string =
+            System.setProperty("java.awt.headless", "false") //Делаем свойство в false, чтобы не падало с исключением
+
+        /**
+         * Aspect that responsible for wait before execution of some methods.
+         * @see WaitController
+         */
+        @Bean
+        @DependsOn("config")
+        @SuppressWarnings("Not used")
+        fun waitController(): WaitController {
+            waitController = WaitController()
+            return waitController
+        }
+
+        /**
+         * Aspect that responsible for logging before and after execution of some methods.
+         * @see LoggingController
+         */
+        @Bean
+        @DependsOn("config")
+        @SuppressWarnings("Not used")
+        fun loggingController(): LoggingController {
+            loggingController = LoggingController()
+            return loggingController
+        }
 
         /**
          * Создание бина 'pageDistributionService'.
@@ -78,12 +114,27 @@ open class Config {
          */
         @Bean
         @DependsOn("config")
+        @SuppressWarnings("Not used")
         fun pageDistributionService(
-            @Value("\${app.stage.name}") stages_string: string,
-            @Value("\${app.stage.browser}") stages_browser: string,
+            @Value("\${app.stage.name:'stable'}") stages_string: string,
+            @Value("\${app.stage.browser:'chrome'}") stages_browser: string,
+            @Value("\${app.stage.monitor:Right}") monitor: Monitor,
                                    ): PageDistributionService {
-            pageDistributionService = PageDistributionService.getInstance(stages_string, stages_browser)
-            return pageDistributionService
+            try {
+                pageDistributionService = PageDistributionService.getInstance(stages_string, stages_browser, monitor)
+                return pageDistributionService
+            } catch (e: Exception) {
+                e.stackTrace.printAll()
+                println(
+                        """
+                    Проверь:
+                    1. Включен ли впн
+                    2. Есть ли интернет
+                    3. На unix системах может быть проблема с Selenide
+                """
+                       )
+                throw Exception("Error in page distribution initialization")
+            }
         }
 
         /**
@@ -95,8 +146,9 @@ open class Config {
          */
         @Bean
         @DependsOn("pageDistributionService")
+        @SuppressWarnings("Not used")
         fun operator(): IStageOperator {
-            operator = pageDistributionService.getOperator()
+            operator = pageDistributionService.get_Operator()
             return operator
         }
 
@@ -109,6 +161,7 @@ open class Config {
          */
         @Bean
         @DependsOn("operator")
+        @SuppressWarnings("Not used")
         fun gameList(): IGameList {
             gameList = operator.login_into_account()
             return gameList
@@ -123,13 +176,14 @@ open class Config {
          */
         @Bean
         @DependsOn("gameList")
+        @SuppressWarnings("Not used")
         fun game(@Value("\${app.stage.game}") game_name: string): IGame {
             game = gameList.get_game(game_name)
             return game
         }
 
         /**
-         * Метод для получения экземпляра игры из контекста
+         * Метод для получения экземпляра игры из контекста.
          * @return объект, имплементирующий интерфейс IGame (затем следует привести к нужному типу)
          */
         fun getGame(): IGame {
@@ -137,12 +191,11 @@ open class Config {
                 println("Game returned")
                 return game
             }
-            println("Game is null!!")
             return throw Exception("Game is not initialized")
         }
 
         /**
-         * Метод для получения экземпляра оператора
+         * Метод для получения экземпляра оператора.
          */
         fun getOperator(): IStageOperator {
             if (operator != null) {
@@ -153,7 +206,7 @@ open class Config {
         }
 
         /**
-         * Метод для получения экземпляра страницы игр
+         * Метод для получения экземпляра страницы игр.
          */
         fun getGameList(): IGameList {
             if (gameList != null) {
@@ -166,7 +219,7 @@ open class Config {
 }
 
 /**
- * Spring boot app entry point
+ * Spring boot app entry point.
  */
 @SpringBootApplication(scanBasePackages = ["org.example.core.settings.Config"])
 open class Application

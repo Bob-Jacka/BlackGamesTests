@@ -1,11 +1,11 @@
 package org.example.core.entities.operator
 
 import com.codeborne.selenide.SelenideElement
-import org.example.core.annotation.BetOperator
+import org.example.core.annotations.BetOperator
 import org.example.core.entities.gameLists.GamesPageSprut
-import org.example.core.functional.ActionController.get_element
-import org.example.core.functional.IGameList
-import org.example.core.functional.IStageOperator
+import org.example.core.main_functionalities.ActionController.get_element
+import org.example.core.main_functionalities.IGameList
+import org.example.core.main_functionalities.IStageOperator
 import org.springframework.context.annotation.Primary
 
 /**

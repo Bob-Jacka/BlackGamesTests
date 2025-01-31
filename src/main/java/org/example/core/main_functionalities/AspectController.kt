@@ -1,34 +1,14 @@
-package org.example.core.functional
+package org.example.core.main_functionalities
 
 import org.aspectj.lang.ProceedingJoinPoint
 import org.aspectj.lang.annotation.*
-import org.example.core.functional.ActionController.wait_For
+import org.example.core.annotations.ControllerAspect
+import org.example.core.main_functionalities.ActionController.wait_For
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-import org.springframework.stereotype.Component
 
-@Aspect
-@Component
+@ControllerAspect
 class WaitController {
-
-    /**
-     * Waits before every method in config
-     * @see org.example.core.settings.Config
-     */
-    @Before("execution(org.example.core.settings.Config.*(..)")
-    fun before_wait1() {
-        println("Before method in config aspect invoked")
-        wait_For(2)
-    }
-
-    /**
-     * Waits for game to load. Maybe problems because of different browsers and different network speed
-     */
-    @Before("execution(org.example.core.games.*.*(..)")
-    fun wait_for_game_load(joinPoint: ProceedingJoinPoint) {
-        println("Before method in config aspect invoked")
-        wait_For(20)
-    }
 
     /**
      * Waits for action to act. Maybe problems because of different browsers and different network speed
@@ -37,7 +17,7 @@ class WaitController {
     @Before("within(org.example.core.functional.ActionController.*(..)")
     fun wait_for_action(joinPoint: ProceedingJoinPoint) {
         println("Before action aspect")
-        wait_For(5)
+        wait_For(1)
     }
 
     /**
@@ -49,20 +29,9 @@ class WaitController {
         println("Around action aspect")
         wait_For(1)
     }
-
-    /**
-     * Waits after every method in config
-     * @see org.example.core.settings.Config
-     */
-    @After("within(org.example.core.settings.Config.*(..)")
-    fun after_wait() {
-        println("After method in config aspect invoked")
-        wait_For(2)
-    }
 }
 
-@Aspect
-@Component
+@ControllerAspect
 class LoggingController {
 
     private val logger: Logger = LoggerFactory.getLogger(this::javaClass.name)
@@ -74,7 +43,7 @@ class LoggingController {
     @Before("within(org.example.core.settings.Config.*(..)")
     fun log_before_exec() {
         logger.info("Log before execution in config")
-        wait_For(2)
+        wait_For(0.5)
     }
 
     /**
@@ -84,7 +53,7 @@ class LoggingController {
     @After("execution(org.example.core.settings.Config.*(..)")
     fun log_after_exec() {
         logger.info("Log after execution in config")
-        wait_For(2)
+        wait_For(0.5)
     }
 
     /**

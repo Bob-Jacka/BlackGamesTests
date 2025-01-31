@@ -3,6 +3,7 @@ package org.example.core.enums;
 import lombok.Getter;
 
 @Getter
+@Deprecated(since = "31.01.2025")
 public enum GameName {
 
     MOOSCAPE("Mooscape"),

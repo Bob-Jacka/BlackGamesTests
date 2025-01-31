@@ -1,23 +1,22 @@
 package org.example.core.games.sc_games
 
-import org.example.core.functional.*
-import org.example.core.functional.ActionController.click_On
 import org.example.core.games.BetBlock
+import org.example.core.main_functionalities.*
+import org.example.core.main_functionalities.ActionController.click_On
 
 class Mooscape : IGameSC, ICrashGame {
 
-    //TODO заменить все todo и нулевые позиции и методы со слэшами
-
     override var isSound = false
-    override val game_info: ElemPos = ElemPos(0, 0)
+
+    override val game_info: ElemPos = ElemPos(-400, 160)
 
     override val first_block = BetBlock()
     override val second_block: BetBlock =
         BetBlock.BetBlockBuilder()
-            .one(first_block.one.forSecondBlock())
-            .two(first_block.two.forSecondBlock())
-            .three(first_block.three.forSecondBlock())
-            .four(first_block.four.forSecondBlock())
+            .one(first_block.one_elem.forSecondBlock())
+            .two(first_block.two_elem.forSecondBlock())
+            .three(first_block.three_elem.forSecondBlock())
+            .four(first_block.four_elem.forSecondBlock())
             .bet_btn(first_block._bet_btn.forSecondBlock())
             .autobet_btn(first_block.autobet_btn.forSecondBlock())
             .autocashout_btn(first_block.autocashout_btn.forSecondBlock())
@@ -29,30 +28,31 @@ class Mooscape : IGameSC, ICrashGame {
             .bet_input_field(first_block.bet_input_field.forSecondBlock())
             .build()
 
-    override val play_btn = ElemPos(960, 850)
-
+    override val play_btn = ElemPos(960, 670)
     override val settings_btn = ElemPos(1788, 185)
     override val sound_btn: ElemPos = ElemPos(1412, 185)
-
     override val balance_btn = ElemPos(1679, 185)
-    override val history_btn: ElemPos = ElemPos(0, 0)
-    private val cachier_btn: ElemPos = ElemPos(116, 106)
+    override val history_btn: ElemPos = ElemPos(-134, 210)
     private val how_to_play = ElemPos(1518, 185)
-    private val block_chain_info = ElemPos(1785, 290)
+    override val blockchaininfo_btn = ElemPos(1785, 290)
 
-    override val input_field_coef: ElemPos = ElemPos(0, 0)
-    override val input_field_bet: ElemPos = ElemPos(0, 0)
+    override val input_field_coef: ElemPos = ElemPos(-1027, 775)
+    override val input_field_bet: ElemPos = ElemPos(-1228, 820)
 
     override fun start_game() {
         click_On(play_btn)
     }
 
-    override fun get_in_history() {
-        //
+    override fun enter_in_history() {
+        click_On(history_btn)
     }
 
     override fun enter_blockchain() {
-        click_On(block_chain_info)
+        click_On(blockchaininfo_btn)
+    }
+
+    override fun enter_game_info() {
+        click_On(game_info)
     }
 
     override fun set_sound_on(state: bool) {
@@ -67,14 +67,18 @@ class Mooscape : IGameSC, ICrashGame {
     }
 
     override fun change_bet(up: bool, howMany: int) {
-        //
+        if (up) {
+            repeat(howMany) {
+                click_On(first_block.plus_bet_btn)
+            }
+        } else {
+            repeat(howMany) {
+                click_On(first_block.minus_bet_btn)
+            }
+        }
     }
 
-    fun open_cachier() {
-        click_On(cachier_btn)
-    }
-
-    override fun open_settings() {
+    override fun enter_settings() {
         click_On(settings_btn)
     }
 
@@ -92,5 +96,9 @@ class Mooscape : IGameSC, ICrashGame {
 
     override fun get_second_block(): BetBlock {
         return second_block
+    }
+
+    override fun enter_settings_btn(): ElemPos {
+        return settings_btn
     }
 }

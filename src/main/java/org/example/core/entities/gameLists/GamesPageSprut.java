@@ -2,22 +2,21 @@ package org.example.core.entities.gameLists;
 
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
-import org.example.core.annotation.BetGamesPage;
+import org.example.core.annotations.BetGamesPage;
 import org.example.core.enums.Env;
 import org.example.core.enums.GameName;
-import org.example.core.functional.IGame;
-import org.example.core.functional.IGameList;
-import org.example.core.functional.IGameSC;
 import org.example.core.games.sc_games.ColorRace;
 import org.example.core.games.sc_games.LuckyFish;
 import org.example.core.games.sc_games.Mooscape;
 import org.example.core.games.sc_games.Pirate;
+import org.example.core.main_functionalities.IGame;
+import org.example.core.main_functionalities.IGameList;
+import org.example.core.main_functionalities.IGameSC;
 import org.jetbrains.annotations.NotNull;
-import org.openqa.selenium.Point;
 import org.springframework.context.annotation.Primary;
 
 import static org.example.core.enums.GameId.*;
-import static org.example.core.functional.ActionController.*;
+import static org.example.core.main_functionalities.ActionController.*;
 
 /**
  * Page with games
@@ -121,7 +120,7 @@ public class GamesPageSprut implements IGameList {
         int positionInList = 1;
         provider.click();
         gameProvider_field.get(positionInList).click();
-        click_On(new Point(100, 100));
+        click_On(100, 100);
     }
 
     public void changeCurrency(int currencyPosition) {

@@ -1,14 +1,14 @@
 package org.example.core.games;
 
-import org.example.core.functional.IEAuto;
-import org.example.core.functional.IEBetBlock;
-import org.example.core.functional.IEPreselects;
+import org.example.core.main_functionalities.IEAuto;
+import org.example.core.main_functionalities.IEBetBlock;
+import org.example.core.main_functionalities.IEPreselects;
 import org.jetbrains.annotations.NotNull;
 import org.openqa.selenium.Point;
 
-import static org.example.core.functional.ActionController.click_On;
-import static org.example.core.functional.ActionController.enter_By_Keyboard;
-import static org.example.core.functional.ExtensionsKt.increase_or_decrease;
+import static org.example.core.main_functionalities.ActionController.click_On;
+import static org.example.core.main_functionalities.ActionController.enter_By_Keyboard;
+import static org.example.core.main_functionalities.ExtensionsKt.increase_or_decrease;
 
 /**
  * first bet block of mooscape game
@@ -28,10 +28,10 @@ public class BetBlock implements IEAuto, IEPreselects, IEBetBlock {
     private Point coef_input_field = new Point(885, 795);
 
     //preselects
-    private Point one = new Point(630, 875);
-    private Point two = new Point(670, 875);
-    private Point three = new Point(710, 875);
-    private Point four = new Point(750, 875);
+    private Point one_elem = new Point(630, 875);
+    private Point two_elem = new Point(670, 875);
+    private Point three_elem = new Point(710, 875);
+    private Point four_elem = new Point(750, 875);
 
     /**
      * Standard constructor for bet block, always returns first bet block
@@ -49,10 +49,10 @@ public class BetBlock implements IEAuto, IEPreselects, IEBetBlock {
         this.minus_coef_btn = builder.minus_coef_btn;
         this.plus_coef_btn = builder.plus_coef_btn;
         this.coef_input_field = builder.coef_input_field;
-        this.one = builder.one;
-        this.two = builder.two;
-        this.three = builder.three;
-        this.four = builder.four;
+        this.one_elem = builder.one;
+        this.two_elem = builder.two;
+        this.three_elem = builder.three;
+        this.four_elem = builder.four;
     }
 
     public void change_bet(int which_block, boolean up, int howMany) {
@@ -104,22 +104,22 @@ public class BetBlock implements IEAuto, IEPreselects, IEBetBlock {
 
     @Override
     public void get_first_ps() {
-        click_On(one);
+        click_On(one_elem);
     }
 
     @Override
     public void get_second_ps() {
-        click_On(two);
+        click_On(two_elem);
     }
 
     @Override
     public void get_third_ps() {
-        click_On(three);
+        click_On(three_elem);
     }
 
     @Override
     public void get_fourth_ps() {
-        click_On(four);
+        click_On(four_elem);
     }
 
     @Override
@@ -171,20 +171,20 @@ public class BetBlock implements IEAuto, IEPreselects, IEBetBlock {
         return bet_input_field;
     }
 
-    public @NotNull Point getOne() {
-        return one;
+    public @NotNull Point getOne_elem() {
+        return one_elem;
     }
 
-    public @NotNull Point getTwo() {
-        return two;
+    public @NotNull Point getTwo_elem() {
+        return two_elem;
     }
 
-    public @NotNull Point getThree() {
-        return three;
+    public @NotNull Point getThree_elem() {
+        return three_elem;
     }
 
-    public @NotNull Point getFour() {
-        return four;
+    public @NotNull Point getFour_elem() {
+        return four_elem;
     }
 
     public void enter_coef(String value) {

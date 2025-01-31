@@ -1,21 +1,21 @@
 package org.example.core.entities.gameLists;
 
 import com.codeborne.selenide.ElementsCollection;
-import org.example.core.annotation.BetGamesPage;
+import org.example.core.annotations.BetGamesPage;
 import org.example.core.enums.GameName;
-import org.example.core.functional.IGame;
-import org.example.core.functional.IGameList;
-import org.example.core.functional.IGameSC;
 import org.example.core.games.sc_games.ColorRace;
 import org.example.core.games.sc_games.LuckyFish;
 import org.example.core.games.sc_games.Mooscape;
 import org.example.core.games.sc_games.Pirate;
+import org.example.core.main_functionalities.IGame;
+import org.example.core.main_functionalities.IGameList;
+import org.example.core.main_functionalities.IGameSC;
 import org.jetbrains.annotations.NotNull;
 import org.openqa.selenium.By;
 
 import static org.example.core.enums.GameId.COLOR_RACE_ENV2;
 import static org.example.core.enums.GameName.COLOR_RACE;
-import static org.example.core.functional.ActionController.get_elements;
+import static org.example.core.main_functionalities.ActionController.get_elements;
 
 @BetGamesPage
 public class GamesPageFairSpin implements IGameList {

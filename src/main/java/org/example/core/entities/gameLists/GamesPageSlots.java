@@ -1,9 +1,9 @@
 package org.example.core.entities.gameLists;
 
 import com.codeborne.selenide.ElementsCollection;
-import org.example.core.annotation.BetGamesPage;
-import org.example.core.functional.IGame;
-import org.example.core.functional.IGameList;
+import org.example.core.annotations.BetGamesPage;
+import org.example.core.main_functionalities.IGame;
+import org.example.core.main_functionalities.IGameList;
 import org.jetbrains.annotations.NotNull;
 
 @BetGamesPage

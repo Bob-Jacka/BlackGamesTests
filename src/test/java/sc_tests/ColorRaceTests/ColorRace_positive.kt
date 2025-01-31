@@ -1,60 +1,68 @@
 package sc_tests.ColorRaceTests
 
 import BaseTest
-import org.example.core.annotation.Test
-import org.example.core.functional.ActionController
+import io.qameta.allure.SeverityLevel
+import org.example.core.annotations.TestCase
 import org.example.core.games.sc_games.ColorRace
+import org.example.core.main_functionalities.ActionController
 import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Tag
 
 @Tag("Positive")
 class ColorRace_positive : BaseTest() {
 
-    @Test
+    private lateinit var colorRace: ColorRace
+
+    @BeforeEach
+    fun init() {
+        colorRace = currentGame as ColorRace
+    }
+
+    @TestCase(SeverityLevel.CRITICAL)
+    fun `Should enter the game`() {
+        colorRace.start_game()
+        assertTrue(ActionController.enter_Result())
+    }
+
+    @TestCase(SeverityLevel.CRITICAL)
     fun `Should pay on green`() {
-        var colorRace: ColorRace = game as ColorRace
         colorRace.payOn_Green()
         assertTrue(ActionController.enter_Result())
     }
 
-    @Test
+    @TestCase(SeverityLevel.CRITICAL)
     fun `Should pay on blue`() {
-        var colorRace: ColorRace = game as ColorRace
         colorRace.payOn_Blue()
         assertTrue(ActionController.enter_Result())
     }
 
-    @Test
+    @TestCase(SeverityLevel.CRITICAL)
     fun `Should pay on purple`() {
-        var colorRace: ColorRace = game as ColorRace
         colorRace.payOn_Purple()
         assertTrue(ActionController.enter_Result())
     }
 
-    @Test
+    @TestCase(SeverityLevel.CRITICAL)
     fun `Should pay on red`() {
-        var colorRace: ColorRace = game as ColorRace
         colorRace.payOn_Red()
         assertTrue(ActionController.enter_Result())
     }
 
-    @Test
+    @TestCase(SeverityLevel.CRITICAL)
     fun `Should pay on All`() {
-        var colorRace: ColorRace = game as ColorRace
         colorRace.payOn_All()
         assertTrue(ActionController.enter_Result())
     }
 
-    @Test
+    @TestCase
     fun `Should turn on music`() {
-        var colorRace: ColorRace = game as ColorRace
         colorRace.set_sound_on(true)
         assertTrue(ActionController.enter_Result())
     }
 
-    @Test
+    @TestCase
     fun `Should turn off music`() {
-        var colorRace: ColorRace = game as ColorRace
         colorRace.set_sound_on(false)
         assertTrue(ActionController.enter_Result())
     }

@@ -1,21 +1,32 @@
-Config -> {
-    PageDistributionService.getStage() ->
-        {
-        FairSpin -> GamesPageFairSpin -> Игры (Mooscape, LuckyFish, Pirate, ColorRace) -> BaseTest -> Тесты (Positive | Negative)
-        или
-        SprutCloud -> GamesPageSprut -> Игры (Mooscape, LuckyFish, Pirate, ColorRace) -> BaseTest -> Тесты (Positive | Negative)
-        или
-        Web3BlockChain -> GamesPageSlots (slots) -> Слоты -> BaseTest -> Тесты ()
-        }
-}
+Config ->
+    {
+        |
+        AspectController {before, after, around аспекты для взаимодействия с сущностями}
 
-"->" - означает последовательность вызовов объектов
+        PageDistributionService.getInstance(stage, browser, *monitor) ->
+            {
+                FairSpin -> GamesPageFairSpin -> Игры (Mooscape, LuckyFish, Pirate, ColorRace) -> BaseTest -> Тесты (Positive | Negative)
+                или
+                SprutCloud -> GamesPageSprut -> Игры (Mooscape, LuckyFish, Pirate, ColorRace) -> BaseTest -> Тесты (Positive | Negative)
+                или
+                Web3BlockChain -> GamesPageSlots (slots) -> Слоты -> BaseTest -> Тесты ()
+            }
+    }
 
-Config - конфигурационный файл фреймворка "Spring", в котором описываются компоненты для создания,
-PageDistribution - Инициализация драйвера браузере, установка параметров браузера, получение Stage
+"->" - означает последовательность вызовов объектов (Конфигурируется в файле конфига).
 
+Config - конфигурационный файл фреймворка "Spring", в котором описываются компоненты для создания;
+   |
+AspectController - классы этого файла могу взаимодействовать со всеми нижележащими сущностями;
+  ! !
+PageDistribution - Инициализация драйвера браузера, установка параметров браузера, получение Stage;
+   |
 Fair spin - вход в аккаунт на сайте оператора (Page object);
+   |
 GamesPageSprut - Page object выбора игры, получение доступа к "созданию" игры;
+ / | \
 Игры - непосредственно игра с уникальными действиями;
-BaseTest - "пре-" и "пост-" хуки для тестов. Запуск Spring boot контекста
+   |
+BaseTest - "пре-" и "пост-" хуки для тестов. Запуск Spring boot контекста;
+   |
 Тесты - автоматизированные тесты в директории "test";

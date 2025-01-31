@@ -1,13 +1,13 @@
-package org.example.core.annotation
+package org.example.core.annotations
 
-import org.example.core.functional.bool
-import org.example.core.functional.string
+import org.example.core.main_functionalities.bool
+import org.example.core.main_functionalities.string
 import org.springframework.context.annotation.Scope
 import org.springframework.stereotype.Component
 
 /**
- * Wrapper annotation for distribution service, ex. PageDistributionService
- * Written for some semantics
+ * Wrapper annotation for distribution service, ex. PageDistributionService.
+ * Written for some semantics.
  * @see org.example.core.entities.PageDistributionService
  */
 @Component

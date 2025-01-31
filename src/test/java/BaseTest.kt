@@ -1,5 +1,11 @@
 import com.codeborne.selenide.Selenide
-import org.example.core.functional.IGame
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import org.example.core.entities.PageDistributionService.Waiter.wait_until_load
+import org.example.core.main_functionalities.ActionController.wait_For
+import org.example.core.main_functionalities.IGame
+import org.example.core.main_functionalities.TestResultsWindow
+import org.example.core.main_functionalities.printAll
 import org.example.core.settings.Config
 import org.jetbrains.annotations.NotNull
 import org.junit.jupiter.api.*
@@ -8,52 +14,64 @@ import org.springframework.test.annotation.DirtiesContext
 
 /**
  * Базовый класс для тестов, аннотирован SpringBootTest.
- * Абстракция для (пре- и пост-) хуков для тестов
+ * Абстракция для (пре- и пост-) хуков для тестов.
+ * @see SpringBootTest
+ * @see DirtiesContext
  */
 @DirtiesContext
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @SpringBootTest(useMainMethod = SpringBootTest.UseMainMethod.ALWAYS, classes = [Config::class])
 open class BaseTest {
 
-    constructor() {
-        println("Default base test constructor invoked")
-    }
+    constructor()
 
     @BeforeEach
     fun local_initGame(@NotNull testInfo: TestInfo) {
-        println()
         print("Test tags: ")
-        testInfo.tags.forEach { print(it) }
-        println()
+        testInfo.tags.printAll()
         println("Test name: " + testInfo.displayName)
+        wait_until_load()
     }
 
     @AfterEach
     fun local_tearDown() {
-        Thread.sleep(100_000)
+        wait_For(5)
     }
 
     companion object Statics {
 
         /**
-         * Статический экземпляр игры
+         * Экземпляр окна для введения результатов тестирования.
+         * @see TestResultsWindow
+         */
+        private lateinit var test_results_frame: TestResultsWindow
+
+        /**
+         * Статический экземпляр игры.
+         * @see IGame
+         * @see org.example.core.games.sc_games.Pirate
+         * @see org.example.core.games.sc_games.LuckyFish
+         * @suppress необходимо сделать приведение типа к текущей необходимой игре.
          */
         @JvmStatic
-        protected lateinit var game: IGame
+        protected lateinit var currentGame: IGame
 
         @JvmStatic
         @BeforeAll
         fun global_init() {
+            runBlocking {
+                launch {
+                    test_results_frame = TestResultsWindow.Singleton.get_instance()!!
+                }.start()
+            }
             println("\t Global initialization invoked")
-            game = Config.SingletonPage.getGame() //Init of the game
-            println("Static C++ library loaded")
-//            System.loadLibrary("org.example.core.functional.Native.open_term")
+            currentGame = Config.SingletonPage.getGame() //Init of the game
         }
 
         @JvmStatic
         @AfterAll
         fun global_tearDown() {
-            println("Exiting..........")
+            test_results_frame.destroy()
             Selenide.closeWindow()
             Selenide.closeWebDriver()
             println("\t Global tear down invoked")
