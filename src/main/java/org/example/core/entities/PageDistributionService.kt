@@ -1,6 +1,7 @@
 package org.example.core.entities
 
 import com.codeborne.selenide.*
+import io.micrometer.common.lang.Nullable
 import org.awaitility.Durations
 import org.example.core.annotations.DistributionPage
 import org.example.core.entities.operator.FairSpin
@@ -11,6 +12,7 @@ import org.example.core.enums.Stages_web_addresses.PROD
 import org.example.core.enums.Stages_web_addresses.SLOT_PROD
 import org.example.core.main_functionalities.*
 import org.example.core.main_functionalities.ActionController.wait_For
+import org.jetbrains.annotations.NotNull
 import org.openqa.selenium.By
 import java.net.URL
 
@@ -24,7 +26,7 @@ open class PageDistributionService : IDistributionServ {
 
         private lateinit var stage: Stages_web_addresses
         private lateinit var browser: string
-        private var pagedist: PageDistributionService? = null
+        private var pageDist: PageDistributionService? = null
         private var isLeftMonitor: bool = false
 
         /**
@@ -34,11 +36,14 @@ open class PageDistributionService : IDistributionServ {
          * @param browser autowired from application.properties
          * @param monitor  autowired from application.properties
          */
-        fun getInstance(stage: string, browser: string, monitor: Monitor): PageDistributionService {
-            if (pagedist == null) {
+        @NotNull
+        fun getInstance(
+            stage: string, browser: string, monitor: Monitor,
+                       ): PageDistributionService {
+            if (pageDist == null) {
                 this.stage = Stages_web_addresses.reverse_getting(stage)
                 this.browser = browser
-                this.pagedist = PageDistributionService()
+                this.pageDist = PageDistributionService()
             }
             Configuration.browser = browser
             Configuration.webdriverLogsEnabled = true
@@ -55,9 +60,16 @@ open class PageDistributionService : IDistributionServ {
             if (monitor == Monitor.LEFT) {
 //                getForSecondMonitor() //By default, browser opens on right display
             }
+//            if (is_neuro_driven) {
+//                runBlocking {
+//                    launch {
+//
+//                    }.start() //TODO сделать создание объекта нейронной сети.
+//                }
+//            }
             WebDriverRunner.getWebDriver().manage().window().maximize()
             wait_For(0.5)
-            return pagedist!!
+            return pageDist!!
         }
 
         /**
@@ -81,6 +93,7 @@ open class PageDistributionService : IDistributionServ {
         /**
          * Enumerate for monitor representation.
          * Only for two monitors. Left and Right.
+         * @see SingletonPage.Monitor
          */
         enum class Monitor(var value: string) {
 
@@ -104,10 +117,11 @@ open class PageDistributionService : IDistributionServ {
     }
 
     /**
-    Открывает страницу в зависимости от переданного параметра stage
+    Открывает страницу в зависимости от переданного параметра stage.
      */
+    @NotNull
     override fun get_Stage(): Stages_web_addresses {
-        if (pagedist != null) {
+        if (pageDist != null) {
             println("Current stage is ${stage.web_address}")
             return stage
         }
@@ -115,8 +129,9 @@ open class PageDistributionService : IDistributionServ {
     }
 
     /**
-     * @return Concrete realization of operator
+     * @return Concrete realization of operator.
      */
+    @NotNull
     override fun get_Operator(): IStageOperator {
         val operator: IStageOperator
         when (stage) {
@@ -144,7 +159,7 @@ open class PageDistributionService : IDistributionServ {
     }
 
     /**
-     * Static object for page actions
+     * Static object for page actions.
      */
     object Waiter {
 
@@ -167,8 +182,6 @@ open class PageDistributionService : IDistributionServ {
             driver.webDriver.manage().timeouts().implicitlyWait(Durations.FIVE_MINUTES)
             driver.switchTo().frame(iframe)
             wait_For(1)
-//            val canvas = driver.webDriver.findElement(By.xpath("//canvas[@id='application-canvas']"))
-//            wait_For(1)
             val progressbar = driver.webDriver.findElement(By.xpath("//div[@id='progress-bar']"))
             while (true) {
                 if (progressbar.getAttribute("style")!!.contains("width: 100%;")) {
@@ -194,6 +207,7 @@ open class PageDistributionService : IDistributionServ {
          * @throws com.codeborne.selenide.ex.ElementNotFound
          * @return String text from pop up or null if exception
          */
+        @Nullable
         fun get_text_from_popup(): string? {
             if (check_elem("popup") == true) {
                 return driver.webDriver.switchTo().alert().text
@@ -205,13 +219,14 @@ open class PageDistributionService : IDistributionServ {
 
         /**
          * Проверка, существует ли элемент на странице.
-         * @param id уникальный идентификатор элемента (id в html)
-         * @return булево значение - (true / false). Если элемента нет или произошла ошибка - null
+         * @param id уникальный идентификатор элемента (id в html).
+         * @return булево значение - (true / false). Если элемента нет или произошла ошибка - null.
          */
+        @Nullable
         fun check_elem(id: string): bool? {
             try {
                 driver.webDriver.findElement(By.id(id))
-                return driver.webDriver.getPageSource().contains(id)
+                return driver.webDriver.pageSource!!.contains(id)
             } catch (e: Exception) {
                 println(e.stackTrace.printAll())
                 println("Error in checking element on page")

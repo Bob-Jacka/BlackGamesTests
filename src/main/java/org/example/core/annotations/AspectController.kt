@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component
 @Aspect
 @Component
 @Scope("singleton")
-annotation class ControllerAspect(
+annotation class AspectController(
 
     val name: string = "",
     val since: string = "",

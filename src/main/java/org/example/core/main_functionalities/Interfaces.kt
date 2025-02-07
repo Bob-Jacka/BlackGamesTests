@@ -83,7 +83,7 @@ interface ISlot : IGame {
 }
 
 /**
-Extender Interface with possibility to enable auto bet or auto cash out.
+Extend Interface with possibility to enable auto bet or auto cash out.
  */
 interface IEAuto {
 
@@ -116,7 +116,7 @@ interface IEAuto {
 }
 
 /**
-Extender Interface for games with preselects available.
+Extend Interface for games with preselects available.
 'ps' at the of the name means - preselect.
  */
 interface IEPreselects {
@@ -233,7 +233,7 @@ interface IGameList {
 }
 
 /**
- * Extender Interface for bet block for crash games.
+ * Extend Interface for bet block for crash games.
  */
 interface IEBetBlock {
 
@@ -253,7 +253,7 @@ interface IEBetBlock {
 }
 
 /**
- * Extender Interface.
+ * Extend Interface.
  * Adds cashier functionality. Supports only in sprut.
  * Deprecated at creation of the interface.
  */

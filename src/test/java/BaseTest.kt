@@ -7,6 +7,7 @@ import org.example.core.main_functionalities.IGame
 import org.example.core.main_functionalities.TestResultsWindow
 import org.example.core.main_functionalities.printAll
 import org.example.core.settings.Config
+import org.example.core.settings.is_neuro_driven
 import org.jetbrains.annotations.NotNull
 import org.junit.jupiter.api.*
 import org.springframework.boot.test.context.SpringBootTest
@@ -59,10 +60,12 @@ open class BaseTest {
         @JvmStatic
         @BeforeAll
         fun global_init() {
-            runBlocking {
-                launch {
-                    test_results_frame = TestResultsWindow.Singleton.get_instance()!!
-                }.start()
+            if (!is_neuro_driven) {
+                runBlocking {
+                    launch {
+                        test_results_frame = TestResultsWindow.Singleton.get_instance()!!
+                    }.start()
+                }
             }
             println("\t Global initialization invoked")
             currentGame = Config.SingletonPage.getGame() //Init of the game

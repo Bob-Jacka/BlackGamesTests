@@ -2,12 +2,12 @@ package org.example.core.main_functionalities
 
 import org.aspectj.lang.ProceedingJoinPoint
 import org.aspectj.lang.annotation.*
-import org.example.core.annotations.ControllerAspect
+import org.example.core.annotations.AspectController
 import org.example.core.main_functionalities.ActionController.wait_For
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
-@ControllerAspect
+@AspectController
 class WaitController {
 
     /**
@@ -31,7 +31,7 @@ class WaitController {
     }
 }
 
-@ControllerAspect
+@AspectController
 class LoggingController {
 
     private val logger: Logger = LoggerFactory.getLogger(this::javaClass.name)

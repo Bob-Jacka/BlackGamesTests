@@ -2,7 +2,7 @@ Config ->
     {
         |
         AspectController {before, after, around аспекты для взаимодействия с сущностями}
-
+        ###############################################################################
         PageDistributionService.getInstance(stage, browser, *monitor) ->
             {
                 FairSpin -> GamesPageFairSpin -> Игры (Mooscape, LuckyFish, Pirate, ColorRace) -> BaseTest -> Тесты (Positive | Negative)
@@ -14,11 +14,12 @@ Config ->
     }
 
 "->" - означает последовательность вызовов объектов (Конфигурируется в файле конфига).
+"###" - не иерархическое взаимодействие.
 
 Config - конфигурационный файл фреймворка "Spring", в котором описываются компоненты для создания;
    |
 AspectController - классы этого файла могу взаимодействовать со всеми нижележащими сущностями;
-  ! !
+  ###
 PageDistribution - Инициализация драйвера браузера, установка параметров браузера, получение Stage;
    |
 Fair spin - вход в аккаунт на сайте оператора (Page object);

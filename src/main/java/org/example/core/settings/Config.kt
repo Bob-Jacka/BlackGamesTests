@@ -3,6 +3,7 @@ package org.example.core.settings
 import org.example.core.entities.PageDistributionService
 import org.example.core.entities.PageDistributionService.SingletonPage.Monitor
 import org.example.core.main_functionalities.*
+import org.jetbrains.annotations.NotNull
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.SpringBootConfiguration
@@ -86,6 +87,7 @@ open class Config {
          * @see WaitController
          */
         @Bean
+        @NotNull
         @DependsOn("config")
         @SuppressWarnings("Not used")
         fun waitController(): WaitController {
@@ -98,6 +100,7 @@ open class Config {
          * @see LoggingController
          */
         @Bean
+        @NotNull
         @DependsOn("config")
         @SuppressWarnings("Not used")
         fun loggingController(): LoggingController {
@@ -110,9 +113,10 @@ open class Config {
          * Зависит от создания бина 'config'.
          * @see PageDistributionService
          * @return PageDistributionService.
-         * ВАЖНО: Все названия бинов являются статическими и не подлежат изменению
+         * ВАЖНО: Все названия бинов являются статическими и не подлежат изменению.
          */
         @Bean
+        @NotNull
         @DependsOn("config")
         @SuppressWarnings("Not used")
         fun pageDistributionService(
@@ -121,19 +125,23 @@ open class Config {
             @Value("\${app.stage.monitor:Right}") monitor: Monitor,
                                    ): PageDistributionService {
             try {
-                pageDistributionService = PageDistributionService.getInstance(stages_string, stages_browser, monitor)
+                pageDistributionService = PageDistributionService.getInstance(
+                        stages_string, stages_browser, monitor)
                 return pageDistributionService
             } catch (e: Exception) {
+                e.message.print()
                 e.stackTrace.printAll()
                 println(
                         """
-                    Проверь:
-                    1. Включен ли впн
-                    2. Есть ли интернет
-                    3. На unix системах может быть проблема с Selenide
+                    Проверь в случае ошибки инициализации pageDistributionService:
+                    1. Включен ли vpn.
+                    2. Работает ли vpn.
+                    3. Есть ли интернет.
+                    4. На unix системах может быть проблема с Selenide.
+                    5. Правильно ли указаны имена инжектируемых параметров.
                 """
                        )
-                throw Exception("Error in page distribution initialization")
+                throw Exception("Error in page distribution initialization, see details above.")
             }
         }
 
@@ -142,9 +150,10 @@ open class Config {
          * Зависит от создания бина 'pageDistributionService'.
          * @see IStageOperator
          * @return IStageOperator.
-         * ВАЖНО: Все названия бинов являются статическими и не подлежат изменению
+         * ВАЖНО: Все названия бинов являются статическими и не подлежат изменению.
          */
         @Bean
+        @NotNull
         @DependsOn("pageDistributionService")
         @SuppressWarnings("Not used")
         fun operator(): IStageOperator {
@@ -157,9 +166,10 @@ open class Config {
          * Зависит от создания бина 'operator'.
          * @see IGameList
          * @return IGameList.
-         * ВАЖНО: Все названия бинов являются статическими и не подлежат изменению
+         * ВАЖНО: Все названия бинов являются статическими и не подлежат изменению.
          */
         @Bean
+        @NotNull
         @DependsOn("operator")
         @SuppressWarnings("Not used")
         fun gameList(): IGameList {
@@ -172,9 +182,10 @@ open class Config {
          * Зависит от создания бина 'gameList'.
          * @see IGame
          * @return IGame.
-         * ВАЖНО: Все названия бинов являются статическими и не подлежат изменению
+         * ВАЖНО: Все названия бинов являются статическими и не подлежат изменению.
          */
         @Bean
+        @NotNull
         @DependsOn("gameList")
         @SuppressWarnings("Not used")
         fun game(@Value("\${app.stage.game}") game_name: string): IGame {
@@ -184,8 +195,10 @@ open class Config {
 
         /**
          * Метод для получения экземпляра игры из контекста.
+         * @see IGame
          * @return объект, имплементирующий интерфейс IGame (затем следует привести к нужному типу)
          */
+        @NotNull
         fun getGame(): IGame {
             if (game != null) {
                 println("Game returned")
@@ -196,7 +209,9 @@ open class Config {
 
         /**
          * Метод для получения экземпляра оператора.
+         * @see IStageOperator
          */
+        @NotNull
         fun getOperator(): IStageOperator {
             if (operator != null) {
                 println("Operator returned")
@@ -207,7 +222,9 @@ open class Config {
 
         /**
          * Метод для получения экземпляра страницы игр.
+         * @see IGameList
          */
+        @NotNull
         fun getGameList(): IGameList {
             if (gameList != null) {
                 println("Game list returned")
@@ -219,13 +236,15 @@ open class Config {
 }
 
 /**
- * Spring boot app entry point.
+ * Spring boot app entry point for load application context.
+ * @see SpringBootApplication
  */
 @SpringBootApplication(scanBasePackages = ["org.example.core.settings.Config"])
 open class Application
 
 fun main(args: Array<String>) {
 
+    @NotNull
     val context: ConfigurableApplicationContext = runApplication<Application>(*args)
     context.addApplicationListener {
         ApplicationListener<ApplicationEvent> {
@@ -237,5 +256,9 @@ fun main(args: Array<String>) {
     }
 }
 
+/**
+ * Configuration for test container.
+ * @see TestConfiguration
+ */
 @TestConfiguration(proxyBeanMethods = false)
 class TestcontainerConfig
