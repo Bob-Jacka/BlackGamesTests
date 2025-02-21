@@ -11,7 +11,7 @@ class ColorRace : IGameSC, ICasualGame {
     override val balance_btn: ElemPos = ElemPos(960, 938)
     override val sound_btn: ElemPos = ElemPos(1780, 145)
     override val history_btn: ElemPos = ElemPos(1690, 145)
-    override val game_info: ElemPos = ElemPos(-220, 165)
+    override val game_info: ElemPos = ElemPos(1700, 165)
     override val upBet_btn: ElemPos = ElemPos(1032, 863)
     override val downBet_btn: ElemPos = ElemPos(885, 863)
     override val blockchaininfo_btn: ElemPos = ElemPos(1780, 250)

@@ -41,7 +41,6 @@ bin/
 ### VS Code ###
 .vscode/
 
-### Mac OS ###
 .DS_Store
 /src/main/java/GamesNet/.venv/
 /src/main/java/GamesNet/.idea/
