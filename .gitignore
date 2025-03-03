@@ -41,6 +41,8 @@ bin/
 ### VS Code ###
 .vscode/
 
+/src/main/java/GamesNet
+
 .DS_Store
 /src/main/java/GamesNet/.venv/
 /src/main/java/GamesNet/.idea/
